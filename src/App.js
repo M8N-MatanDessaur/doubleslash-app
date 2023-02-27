@@ -1,22 +1,19 @@
-import logo from './logo.svg';
+// @ts-nocheck
+/* eslint-disable react/jsx-no-comment-textnodes */
+
+import React from 'react';
+import dblslshLogo from "./assets/dblslsh-logo.png";
 import './App.css';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className='App'>
+      <header>
+        <img className='logo-image' src={dblslshLogo} alt="" height="50px" />
+        <div>
+          <h1 className='accent-color-lighter'>//DoubleSlash</h1>
+          <code>a note taking app for coders</code>
+        </div>
       </header>
     </div>
   );
