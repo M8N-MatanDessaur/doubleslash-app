@@ -41,7 +41,7 @@ export default function BottomBar() {
     return (
         <Footer>
              <NoteSearch type="search" name="search-notes" placeholder="Search your notes"/>
-            <Fab size="medium" color="success" aria-label="add"><AddIcon /></Fab>
+            <Fab size="medium" color="success" aria-label="add" sx={{minWidth: "48px !important"}}><AddIcon /></Fab>
         </Footer>
     )
 }
