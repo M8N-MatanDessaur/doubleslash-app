@@ -12,7 +12,6 @@ export default function ContentContainer({children}){
         left:0;
         height: calc(100svh - 160px);
         width:100vw;
-        padding:35px;
         overflow-y:scroll;
         overflow-x:hidden;
     `;

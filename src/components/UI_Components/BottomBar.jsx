@@ -16,7 +16,9 @@ export default function BottomBar() {
     display:flex;
     justify-content:flex-end;
     align-items:center;
-    gap:17.5px
+    gap:17.5px;
+    box-shadow: 0 20px 20px 40px var(--background-color);
+    z-index:99;
     `;
 
     const NoteSearch = styled.input`
@@ -34,7 +36,7 @@ export default function BottomBar() {
 
     return (
         <Footer>
-             <NoteSearch type="search" name="search-notes"/>
+             <NoteSearch type="search" name="search-notes" placeholder="Search your notes"/>
             <Fab size="medium" color="success" aria-label="add"><AddIcon /></Fab>
         </Footer>
     )
