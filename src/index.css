@@ -43,6 +43,10 @@
   background-color: #83c26580;
 }
 
+input[type="search"]::-webkit-search-cancel-button{
+  appearance: none;
+}
+
 
 
 /* Body Optimising */

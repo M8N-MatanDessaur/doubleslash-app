@@ -6,8 +6,11 @@ import profileDefault from '../../assets/images/default.jpg'
 
 export default function TopBar({title="//DoubleSlash", profileImage=profileDefault}){
     const Header = styled.header`
+    position:absolute;
+    top:0;
+    left:0;
     height:80px;
-    width:inherit;
+    width:100vw;
     padding: 0 35px;
     display:flex;
     justify-content:space-between;

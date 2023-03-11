@@ -7,8 +7,11 @@ import AddIcon from '@mui/icons-material/Add';
 
 export default function BottomBar() {
     const Footer = styled.footer`
+    position:absolute;
+    bottom:0;
+    left:0;
     height:80px;
-    width:inherit;
+    width:100vw;
     padding:0 35px;
     display:flex;
     justify-content:flex-end;
