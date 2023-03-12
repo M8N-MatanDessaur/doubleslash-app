@@ -15,7 +15,7 @@ export default function TopBar({title="//DoubleSlash", profileImage=profileDefau
     display:flex;
     justify-content:space-between;
     align-items:center;
-    box-shadow: 0 -20px 20px 40px var(--background-color);
+    box-shadow: 0 -40px 22px 50px var(--background-color);
     z-index:99;
     `;
 

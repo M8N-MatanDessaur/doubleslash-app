@@ -17,7 +17,7 @@ export default function BottomBar() {
     justify-content:flex-end;
     align-items:center;
     gap:17.5px;
-    box-shadow: 0 20px 20px 40px var(--background-color);
+    box-shadow: 0 40px 22px 50px var(--background-color);
     z-index:99;
 
     @media (max-width: 530px) {
