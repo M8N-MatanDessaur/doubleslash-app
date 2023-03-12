@@ -6,31 +6,12 @@ import BottomBar from '../UI_Components/BottomBar';
 import ContentContainer from '../UI_Components/ContentContainer';
 import TopBar from '../UI_Components/TopBar';
 
-export default function MainLayout({openModal}){
+export default function MainLayout({openModal, notes}){
     return(
         <>
             <TopBar/>
             <ContentContainer>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
-                <NotePreviewCard openModal={openModal}/>
+                {notes.map((note, index) => <NotePreviewCard key={index} openModal={openModal} noteBody={note.body} noteTitle={note.title} noteExtention={note.extention} noteId={note.id}/>)}
             </ContentContainer>
             <BottomBar/>
         </>

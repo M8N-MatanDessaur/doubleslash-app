@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function NotePreviewCard({openModal}){
+export default function NotePreviewCard({openModal, noteBody, noteTitle, noteExtention, noteId}){
     const NoteCard = styled.article`
         position:relative;
         max-height:350px;
@@ -20,10 +20,21 @@ export default function NotePreviewCard({openModal}){
         right:10px;
         color:#CCCCCC40;
     `;
+
+    const Text = styled.pre`
+        height:-webkit-fill-available;
+        height:100%;
+        padding:8.75px;
+        overflow: hidden;
+        white-space:pre;
+        font-size: smaller;
+    `;
+
     return(
         <NoteCard onClick={openModal}>
-            <code>const greet = "helloworld"</code>
-            <Extention>.txt</Extention>
+            <h3>{noteTitle}</h3>
+            <code><Text id={noteId}>{noteBody}</Text></code>
+            <Extention>{noteExtention}</Extention>
         </NoteCard>
     )
 }
