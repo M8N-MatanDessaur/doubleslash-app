@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-export default function NoteModal({ title = "//Title", dateModified="12-03-2023" }) {
+export default function NoteModal({ title = "//Title", dateModified="12-03-2023", modalOpen, closeModal }) {
+
+// Styles
     const Overlay = styled.div`
         position:absolute;
         top:0;
         left:0;
         height:100svh;
         width:100vw;
-        display:grid;
+        display:none;
         place-content:center;
         background-color: #000000A0;
         backdrop-filter:blur(2px);
@@ -114,6 +116,8 @@ export default function NoteModal({ title = "//Title", dateModified="12-03-2023"
 
     const Note = styled.code`
         outline:none;
+        height: -webkit-fill-available;
+        height: -moz-available;
         width:-webkit-fill-available;
         width:-moz-available;
         padding: 8.75px;
@@ -121,11 +125,15 @@ export default function NoteModal({ title = "//Title", dateModified="12-03-2023"
         white-space: pre-line;
     `;
 
+// Functionality
+    //TODO - Share functionality
+
+// Render
     return (
-        <Overlay>
-            <NotePad>
+        <Overlay style={modalOpen} onClick={closeModal}>
+            <NotePad onClick={event => event.stopPropagation()}>
                 <NoteHeader>
-                    <ActionButton>
+                    <ActionButton onClick={closeModal}> 
                         <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z"></path>
                         </svg>
@@ -138,7 +146,7 @@ export default function NoteModal({ title = "//Title", dateModified="12-03-2023"
                 </NoteHeader>
                 <NoteBody>
                     <NoteTitle type="text" name="title" value={title} />
-                    <Note lang="javascript" contentEditable="true">
+                    <Note contentEditable="true" spellcheck="false">
                         
                     </Note>
                 </NoteBody>

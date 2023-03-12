@@ -6,31 +6,31 @@ import BottomBar from '../UI_Components/BottomBar';
 import ContentContainer from '../UI_Components/ContentContainer';
 import TopBar from '../UI_Components/TopBar';
 
-export default function MainLayout(){
+export default function MainLayout({openModal}){
     return(
         <>
             <TopBar/>
             <ContentContainer>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
-                <NotePreviewCard/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
+                <NotePreviewCard openModal={openModal}/>
             </ContentContainer>
             <BottomBar/>
         </>
