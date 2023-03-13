@@ -21,7 +21,7 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, notes }) 
             dateCreated: notes[selectedId].dateCreated,
             dateModified: '',
         })
-    },[selectedId, notes]) 
+    },[ selectedId, notes]) 
 
     const handleChange = event => {
 

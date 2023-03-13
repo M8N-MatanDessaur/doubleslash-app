@@ -4,12 +4,28 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const noteRouter = require('./routes/notes-route');
 
 //CONSTANTS
 const port = 4040;
 
 //NEW INSTANCES
 const server = express();
+server.use(cors());
+
+//ROUTES
+server.use('/notes', noteRouter);
+
+//MONGOOSE CONNECTION
+const connection = mongoose.connection;
+mongoose.connect('mongodb+srv://matandessaur:dblslsh@dblslsh.jmmsudd.mongodb.net/DoubleSlashDB',
+{ 
+  useNewUrlParser: true,
+  useUnifiedTopology : true
+});
+connection.once('open', ()=>{
+    console.log('Connected to DoubleSlashDB')
+})
 
 
 //PORT LISTENER

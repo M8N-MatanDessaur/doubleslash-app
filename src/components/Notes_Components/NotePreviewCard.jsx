@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function NotePreviewCard({openModal, noteBody, noteTitle, noteExtention, noteId}){
+export default function NotePreviewCard({openModal, noteBody, noteTitle, noteExtention, noteId, cardId}){
     return(
-        <NoteCard onClick={openModal} id={noteId}>
+        <NoteCard onClick={openModal} id={cardId}>
             <h3>{noteTitle}</h3>
             <code><Text>{noteBody}</Text></code>
             <Extention>{noteExtention}</Extention>
@@ -38,4 +38,5 @@ padding:8.75px;
 overflow: hidden;
 white-space:pre;
 font-size: smaller;
+font-family: var(--code-font);
 `;
