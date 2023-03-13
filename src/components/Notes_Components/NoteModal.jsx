@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-export default function NoteModal({ title = "//Title", dateModified="12-03-2023", modalOpen, closeModal, selectedId, notes }) {
+export default function NoteModal({modalOpen, closeModal, selectedId, notes }) {
 // Functionality
-    //TODO - Share functionality
+    //TODO - Share functionality *
+
+    const handleChange = event => {
+
+    }
 
 // Render
     return (
@@ -22,12 +26,10 @@ export default function NoteModal({ title = "//Title", dateModified="12-03-2023"
                     </ActionButton>
                 </NoteHeader>
                 <NoteBody>
-                    <NoteTitle type="text" name="title" value={notes[selectedId].title.toString()} />
-                    <Note contentEditable="true" spellcheck="false">
-                        {notes[selectedId].body.toString()}
-                    </Note>
+                    <NoteTitle type="text" name="title" value={`//${notes[selectedId].title}`} onChange={handleChange} />
+                    <Note contentEditable="true" spellcheck="false"  value={notes[selectedId].body.toString()} onChange={handleChange}></Note>
                 </NoteBody>
-                <NoteFooter>Date modified {dateModified}</NoteFooter>
+                <NoteFooter>{`Date Modified ${notes[selectedId].dateModified}`}</NoteFooter>
             </NotePad>
         </Overlay>
     )
@@ -143,7 +145,7 @@ const Overlay = styled.div`
         font-size: 1.2rem;
     `;
 
-    const Note = styled.code`
+    const Note = styled.textarea`
         outline:none;
         height: -webkit-fill-available;
         height: -moz-available;
@@ -152,4 +154,9 @@ const Overlay = styled.div`
         padding: 8.75px;
         display:block;
         white-space: pre-line;
+        font-family: var(--code-font);
+        background-color: transparent;
+        color:var(--text-color);
+        border:none;
+        resize:none;
     `;

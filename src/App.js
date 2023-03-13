@@ -28,7 +28,8 @@ import './App.css';
 import MainLayout from './components/Layout_Components/MainLayout';
 import NoteModal from './components/Notes_Components/NoteModal';`, 
       extention : ".txt",
-      dateCreated: "12-03-2023" 
+      dateCreated: "12-03-2023",
+      dateModified: "12-03-2023" 
     },
     {  
       id: 1,
@@ -42,7 +43,8 @@ import NoteModal from './components/Notes_Components/NoteModal';`,
   dateCreated: "12-03-2023" 
 }`, 
       extention : ".txt",
-      dateCreated: "12-03-2023" 
+      dateCreated: "12-03-2023",
+      dateModified: "12-03-2023"  
     },
     {  
       id: 2,
@@ -56,7 +58,8 @@ import NoteModal from './components/Notes_Components/NoteModal';`,
       white-space:pre;
   ;`, 
       extention : ".txt",
-      dateCreated: "12-03-2023" 
+      dateCreated: "12-03-2023",
+      dateModified: "12-03-2023"  
     },
     {  
       id: 3,
@@ -82,7 +85,8 @@ import NoteModal from './components/Notes_Components/NoteModal';`,
           )
       }`,
       extention : ".txt",
-      dateCreated: "12-03-2023" 
+      dateCreated: "12-03-2023",
+      dateModified: "12-03-2023"  
     },
     {  
       id: 4,
@@ -96,7 +100,8 @@ import NoteModal from './components/Notes_Components/NoteModal';`,
         </NoteCard>
     )`,
       extention : ".txt",
-      dateCreated: "12-03-2023" 
+      dateCreated: "12-03-2023",
+      dateModified: "12-03-2023"  
     },
   ]
 
