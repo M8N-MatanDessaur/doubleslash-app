@@ -6,18 +6,21 @@ import MainLayout from './components/Layout_Components/MainLayout';
 import NoteModal from './components/Notes_Components/NoteModal';
 
 const App = () => {
+
+  const [selectedId, setSelectedId] = useState(0);
+
   //----Modal visibility state-------------------------------------//
   const [modalOpen, setModalOpen] = useState({ display: "none" }); //> Initialise Modal state to display None
   const closeModal = () => {setModalOpen({ display: "none" })};    //> Close Modal
   const openModal  = (e) => {
     setModalOpen({ display: "grid" })
-    console.log(e.target.id);
+    setSelectedId(e.parentTarget.id);
   };//> Open Modal
   //---------------------------------------------------------------//
 
   const notes = [
     {  
-      id: 1,
+      id: 0,
       author : "Matan", 
       title : "Imports", 
       body : `import React, { useState } from 'react';
@@ -28,7 +31,7 @@ import NoteModal from './components/Notes_Components/NoteModal';`,
       dateCreated: "12-03-2023" 
     },
     {  
-      id: 2,
+      id: 1,
       author : "Matan", 
       title : "Note Object", 
       body : `{  
@@ -42,7 +45,7 @@ import NoteModal from './components/Notes_Components/NoteModal';`,
       dateCreated: "12-03-2023" 
     },
     {  
-      id: 3,
+      id: 2,
       author : "Matan", 
       title : "Styled Pre", 
       body : ` const Text = styled.pre'
@@ -56,7 +59,7 @@ import NoteModal from './components/Notes_Components/NoteModal';`,
       dateCreated: "12-03-2023" 
     },
     {  
-      id: 4,
+      id: 3,
       author : "Matan", 
       title : "MainComponent", 
       body : `import React from "react";
@@ -82,7 +85,7 @@ import NoteModal from './components/Notes_Components/NoteModal';`,
       dateCreated: "12-03-2023" 
     },
     {  
-      id: 5,
+      id: 4,
       author : "Matan", 
       title : "NoteCard Component", 
       body : `    return(
@@ -100,7 +103,7 @@ import NoteModal from './components/Notes_Components/NoteModal';`,
   return (
     <div className='App'>
       <MainLayout openModal={openModal} notes={notes}/>
-      <NoteModal modalOpen={modalOpen} closeModal={closeModal}  notes={notes}/>
+      <NoteModal modalOpen={modalOpen} closeModal={closeModal} notes={notes} selectedId={selectedId}/>
     </div>
   );
 }

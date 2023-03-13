@@ -6,7 +6,16 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
 export default function BottomBar() {
-    const Footer = styled.footer`
+    return (
+        <Footer>
+             <NoteSearch type="search" name="search-notes" placeholder="Search your notes"/>
+            <Fab size="medium" color="success" aria-label="add" sx={{minWidth: "48px !important"}}><AddIcon /></Fab>
+        </Footer>
+    )
+}
+
+
+const Footer = styled.footer`
     position:absolute;
     bottom:0;
     left:0;
@@ -37,11 +46,3 @@ export default function BottomBar() {
     font-size:1.1rem;
     `;
 
-
-    return (
-        <Footer>
-             <NoteSearch type="search" name="search-notes" placeholder="Search your notes"/>
-            <Fab size="medium" color="success" aria-label="add" sx={{minWidth: "48px !important"}}><AddIcon /></Fab>
-        </Footer>
-    )
-}
