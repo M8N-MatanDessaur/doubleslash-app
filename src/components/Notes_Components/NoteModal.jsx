@@ -1,20 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-export default function NoteModal({modalOpen, closeModal, selectedId, notes }) {
-// Functionality
-    //TODO - Share functionality *
+export default function NoteModal({ modalOpen, closeModal, selectedId, notes }) {
+
+    const [newNote, setNewNote] = useState({
+        author: '',
+        title: '',
+        body: '',
+        extention: '',
+        dateCreated: '',
+        dateModified: '',
+    })
+
+    useEffect(()=> {
+        setNewNote({
+            author: notes[selectedId].author,
+            title: notes[selectedId].title,
+            body: notes[selectedId].body,
+            extention: notes[selectedId].extention,
+            dateCreated: notes[selectedId].dateCreated,
+            dateModified: '',
+        })
+    },[selectedId, notes]) 
 
     const handleChange = event => {
 
     }
 
-// Render
     return (
         <Overlay style={modalOpen} onClick={closeModal}>
             <NotePad onClick={event => event.stopPropagation()}>
                 <NoteHeader>
-                    <ActionButton onClick={closeModal}> 
+                    <ActionButton onClick={closeModal}>
                         <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z"></path>
                         </svg>
@@ -26,10 +43,11 @@ export default function NoteModal({modalOpen, closeModal, selectedId, notes }) {
                     </ActionButton>
                 </NoteHeader>
                 <NoteBody>
-                    <NoteTitle type="text" name="title" value={`//${notes[selectedId].title}`} onChange={handleChange} />
-                    <Note contentEditable="true" spellcheck="false"  value={notes[selectedId].body.toString()} onChange={handleChange}></Note>
+                    <NoteTitle type="text" name="title" value={`//${newNote.title}`} onChange={handleChange} />
+                    <Note name="body" spellcheck="false" value={newNote.body.toString()} onChange={handleChange}></Note>
                 </NoteBody>
-                <NoteFooter>{`Date Modified ${notes[selectedId].dateModified}`}</NoteFooter>
+                <NoteExtention type="text" name="extention" value={newNote.extention} onChange={handleChange}/>
+                <NoteFooter>{`Date Modified ${newNote.dateModified}`}</NoteFooter>
             </NotePad>
         </Overlay>
     )
@@ -48,7 +66,7 @@ const Overlay = styled.div`
         z-index:100;
     `;
 
-    const NotePad = styled.section`
+const NotePad = styled.section`
         position:relative;
         height:70svh;
         width:60vw;
@@ -62,7 +80,7 @@ const Overlay = styled.div`
         }
     `;
 
-    const NoteHeader = styled.div`
+const NoteHeader = styled.div`
         position:absolute;
         top:0;
         left:0;
@@ -78,7 +96,7 @@ const Overlay = styled.div`
         background:#CCCCCC10;
     `;
 
-    const NoteFooter = styled.div`
+const NoteFooter = styled.div`
         position:absolute;
         bottom:0;
         left:0;
@@ -95,8 +113,8 @@ const Overlay = styled.div`
         font-size:0.8rem;
     `;
 
-    //! FIX-FOR-MOZZILA !\\
-    const NoteBody = styled.div`
+//! FIX-FOR-MOZZILA !\\
+const NoteBody = styled.div`
         position:absolute;
         top:40px;
         left:0;
@@ -114,7 +132,7 @@ const Overlay = styled.div`
         }
     `;
 
-    const ActionButton = styled.button`
+const ActionButton = styled.button`
         height: 25px;
         background: none;
         border: none;
@@ -133,7 +151,7 @@ const Overlay = styled.div`
         }
     `;
 
-    const NoteTitle = styled.input`
+const NoteTitle = styled.input`
         width:-webkit-fill-available;
         width:-moz-available;
         padding: 8.75px;
@@ -145,7 +163,7 @@ const Overlay = styled.div`
         font-size: 1.2rem;
     `;
 
-    const Note = styled.textarea`
+const Note = styled.textarea`
         outline:none;
         height: -webkit-fill-available;
         height: -moz-available;
@@ -159,4 +177,19 @@ const Overlay = styled.div`
         color:var(--text-color);
         border:none;
         resize:none;
+        caret-color: var(--accent-color-lighter) 
+    `;
+
+const NoteExtention = styled.input`
+        position:absolute;
+        width: 10ch;
+        padding: 0 8.75px;
+        bottom: 62.5px;
+        right: 17.5px;
+        background-color: transparent;
+        color: var(--accent-color-lighter);
+        outline:none;
+        border-radius:50px;
+        border: solid 2px #2b2b2b;
+        font-size:1.1rem;
     `;
