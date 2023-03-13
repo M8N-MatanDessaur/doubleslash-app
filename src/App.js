@@ -14,7 +14,7 @@ const App = () => {
   const closeModal = () => {setModalOpen({ display: "none" })};    //> Close Modal
   const openModal  = (e) => {
     setModalOpen({ display: "grid" })
-    setSelectedId(e.parentTarget.id);
+    setSelectedId(e.currentTarget.id);
   };//> Open Modal
   //---------------------------------------------------------------//
 

@@ -22,7 +22,7 @@ export default function NoteModal({ title = "//Title", dateModified="12-03-2023"
                     </ActionButton>
                 </NoteHeader>
                 <NoteBody>
-                    <NoteTitle type="text" name="title" value= {notes[selectedId].title.toString()} />
+                    <NoteTitle type="text" name="title" value={notes[selectedId].title.toString()} />
                     <Note contentEditable="true" spellcheck="false">
                         {notes[selectedId].body.toString()}
                     </Note>
