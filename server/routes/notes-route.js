@@ -41,4 +41,16 @@ noteRouter.put('/editNote/:id', (req,res)=>{
     .catch(err=>console.error(err))
 })
 
+// Delete note whit id
+noteRouter.delete('/deleteNote/:id', (req, res) => {
+    const id = req.params.id;
+    noteModel.findByIdAndDelete(id)
+      .then(() => {
+        res.status(200).send(`Note with id ${id} deleted successfully`);
+      })
+      .catch((err) => {
+        res.status(500).send(`Error deleting note with id ${id}`);
+      });
+  });
+
 module.exports = noteRouter;

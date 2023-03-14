@@ -40,3 +40,15 @@
   dateCreated {type : date} //date.now 
 }  
 ```
+
+
+---
+---
+
+# Task
+> Developer : Eric \
+> Date      : 14-03-2023 \
+> task      : Back and front : deleate note 
+
+---
+---

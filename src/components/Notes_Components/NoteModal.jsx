@@ -36,6 +36,12 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
         closeModal()
     }
 
+    const deleteNote = () => {
+        axios.delete(`http://localhost:4040/notes/deleteNote/${selectedId}`)
+        .then((res) => {console.log(res.data)})
+        .catch((err) => console.log(err))
+    }
+
     return (
         <Overlay style={modalOpen} onClick={editNote}>
             <NotePad onClick={event => event.stopPropagation()}>
@@ -43,6 +49,11 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
                     <ActionButton onClick={editNote}>
                         <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z"></path>
+                        </svg>
+                    </ActionButton>
+                    <ActionButton onClick={deleteNote}>
+                    <svg width="30" height="30" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="m14.5 3 1 1H19v2H5V4h3.5l1-1h5ZM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12Zm6-9 4 4h-2v4h-4v-4H8l4-4Z" clip-rule="evenodd"></path>
                         </svg>
                     </ActionButton>
                     <ActionButton>
