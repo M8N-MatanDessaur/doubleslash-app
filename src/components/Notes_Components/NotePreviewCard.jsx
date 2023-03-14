@@ -34,7 +34,7 @@ color:#CCCCCC40;
 
 const Text = styled.pre`
 height:-webkit-fill-available;
-height:100%;
+height:85%;
 padding:8.75px;
 overflow: hidden;
 white-space:pre;
