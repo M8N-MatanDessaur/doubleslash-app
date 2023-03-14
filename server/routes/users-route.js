@@ -5,6 +5,7 @@ const userRouter = express.Router();
 const userModel = require("../model/user.model");
 userRouter.use(express.json());
 
+// CREATE NEW USER
 userRouter.post("/newUser", (req, res) => {
   const newUser = new userModel(req.body);
   newUser
@@ -17,6 +18,7 @@ userRouter.post("/newUser", (req, res) => {
     });
 });
 
+// GET ALL USERS
 userRouter.get("/users", (req, res) => {
   userModel
     .find()
@@ -26,6 +28,7 @@ userRouter.get("/users", (req, res) => {
     });
 });
 
+// EDIT USER
 userRouter.put("/editUser/:id", (req, res) => {
   const id = req.params.id;
   userModel
@@ -39,10 +42,35 @@ userRouter.put("/editUser/:id", (req, res) => {
 
       editedUser
         .save()
-        .then(res.status(200))
-        .catch((err) => console.error(err));
+        .then(() => res.json("User edition successful !")) // on confirme le travail
+        .catch((err) => res.status(400).json("Error during saving : " + err));
     })
     .catch((err) => console.error(err));
+});
+
+// DELETE USER
+userRouter.delete("/deleteUser/:id", (req, res) => {
+  const id = req.params.id;
+  userModel
+    .findByIdAndDelete(id)
+    .then((utilisateur) => {
+      res.status(202).json({
+        msg: `User with ${utilisateur._id} deleted`,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+
+// GET ONE USER
+userRouter.get("/getUser/:id", (req, res) => {
+  const id = req.params.id;
+  userModel
+    .findById(id)
+    .exec()
+    .then((send) => res.status(200).json(send))
+    .catch((err) => res.status(400).json("Error with id : " + err));
 });
 
 module.exports = userRouter;
