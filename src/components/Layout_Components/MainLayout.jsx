@@ -11,7 +11,7 @@ export default function MainLayout({openModal, notes}){
         <>
             <TopBar/>
             <ContentContainer>
-                {notes.map((note, index) => <NotePreviewCard key={index} cardId={index} openModal={openModal} noteBody={note.body} noteTitle={note.title} noteExtention={note.extention} noteId={note.id}/>)}
+                {notes.map((note, index) => <NotePreviewCard key={index} cardId={index} openModal={openModal} noteBody={note.body} noteTitle={note.title} noteExtention={note.extention} noteId={note._id}/>)}
             </ContentContainer>
             <BottomBar/>
         </>

@@ -3,14 +3,13 @@ import styled from "styled-components";
 
 export default function NotePreviewCard({openModal, noteBody, noteTitle, noteExtention, noteId, cardId}){
     return(
-        <NoteCard onClick={openModal} id={cardId}>
+        <NoteCard onClick={openModal} id={cardId} data-note={noteId}>
             <h3>{noteTitle}</h3>
             <code><Text>{noteBody}</Text></code>
             <Extention>{noteExtention}</Extention>
         </NoteCard>
     )
 }
-
 
 const NoteCard = styled.article`
 position:relative;
@@ -22,6 +21,8 @@ padding:17.5px;
 border-radius:5px;
 border: solid 2px #CCCCCC40;
 font-size:0.8rem;
+
+value : ${props => props.noteId}
 `;
 
 const Extention = styled.p`
