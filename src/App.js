@@ -1,20 +1,31 @@
-// @ts-nocheck
-/* eslint-disable react/jsx-no-comment-textnodes */
-
-import React from 'react';
-import dblslshLogo from "./assets/dblslsh-logo.png";
+import React, { useState } from 'react';
 import './App.css';
+import MainLayout from './components/Layout_Components/MainLayout';
+import NoteModal from './components/Notes_Components/NoteModal';
+import useSWR from 'swr';
+import axios from 'axios';
 
 const App = () => {
+
+  const [selectedId, setSelectedId] = useState(0);
+  //----Modal visibility state-------------------------------------//
+  const [modalOpen, setModalOpen] = useState({ display: "none" }); //> Initialise Modal state to display None
+  const closeModal = () => { setModalOpen({ display: "none" }) };  //> Close Modal
+  const openModal = (e) => {                                       //> Open Modal
+    setModalOpen({ display: "grid" })
+    setSelectedId(e.currentTarget.id);
+  };
+  //---------------------------------------------------------------//
+
+  const fetcher = (url) => axios.get(url).then((res) => res.data);
+  const { data: notes, error } = useSWR('http://localhost:4040/notes/notes', fetcher);
+  if (error) return <div>Error loading notes</div>;
+  if (!notes) return <div>Loading...</div>;
+
   return (
     <div className='App'>
-      <header>
-        <img className='logo-image' src={dblslshLogo} alt="" height="50px" />
-        <div>
-          <h1 className='accent-color-lighter'>//DoubleSlash</h1>
-          <code>a note taking app for coders</code>
-        </div>
-      </header>
+      <MainLayout openModal={openModal} notes={notes} />
+      <NoteModal modalOpen={modalOpen} closeModal={closeModal} notes={notes} selectedId={selectedId} />
     </div>
   );
 }
