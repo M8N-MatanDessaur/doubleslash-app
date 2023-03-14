@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -28,6 +29,10 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
     }
 
     const editNote = () => {
+        axios.put(`http://localhost:4040/notes/editNote/${selectedId}`, newNote)
+        .then((res) => {console.log(res.data)})
+        .catch((err) => console.log(err))
+
         closeModal()
     }
 
