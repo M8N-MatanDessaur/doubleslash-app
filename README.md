@@ -20,7 +20,6 @@
 
 
 ## • Data Models:
-
 ```JS
 //User  
 {   
@@ -33,10 +32,25 @@
 
 //Notes  
 {  
-  author {type : String}, //user.email 
+  author {type : String}, 
   title {type : String}, 
   body : {type : String}, 
-  extention : {type : String}, //file
-  dateCreated {type : date} //date.now 
+  extention : {type : String}, 
+  dateCreated {type : date} 
 }  
 ```
+
+
+---
+---
+
+# Task
+> Developer : Matan \
+> Date      : 14-03-2023 \
+> Task      : 
+
+---
+---
+
+
+
