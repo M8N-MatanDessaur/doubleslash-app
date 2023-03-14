@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { mutate } from "swr";
 
 export default function NoteModal({ modalOpen, closeModal, selectedId, selectedCard, notes }) {
 
@@ -35,12 +36,16 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
 
         closeModal()
     }
-
-    const deleteNote = () => {
-        axios.delete(`http://localhost:4040/notes/deleteNote/${selectedId}`)
-        .then((res) => {console.log(res.data)})
-        .catch((err) => console.log(err))
-    }
+// *Eric Gendron
+    const deleteNote = async () => {
+        try {
+          await axios.delete(`http://localhost:4040/notes/deleteNote/${selectedId}`);
+          await mutate('http://localhost:4040/notes/notes');
+          window.location.reload(false);
+        } catch (err) {
+          console.log(err);
+        }
+      }
 
     return (
         <Overlay style={modalOpen} onClick={editNote}>
@@ -48,17 +53,12 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
                 <NoteHeader>
                     <ActionButton onClick={editNote}>
                         <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z"></path>
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z"/>
                         </svg>
                     </ActionButton>
                     <ActionButton onClick={deleteNote}>
-                    <svg width="30" height="30" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="m14.5 3 1 1H19v2H5V4h3.5l1-1h5ZM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12Zm6-9 4 4h-2v4h-4v-4H8l4-4Z" clip-rule="evenodd"></path>
-                        </svg>
-                    </ActionButton>
-                    <ActionButton>
                         <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92 0-1.61-1.31-2.92-2.92-2.92Z"></path>
+                            <path d="M12.583 4.569a2.4 2.4 0 0 1 3.393 0l4.655 4.655a2.4 2.4 0 0 1 0 3.393l-6.6 6.6a2.4 2.4 0 0 1-1.697.704h-3.31a2.4 2.4 0 0 1-1.697-.704l-3-3a2.4 2.4 0 0 1 0-3.393l8.255-8.255Zm2.545.848a1.2 1.2 0 0 0-1.697 0l-5.56 5.56 6.352 6.351 5.56-5.56a1.2 1.2 0 0 0 0-1.696l-4.655-4.655Zm-1.753 12.76-6.352-6.352-1.847 1.847a1.2 1.2 0 0 0 0 1.697l3 3a1.2 1.2 0 0 0 .849.352h3.31a1.2 1.2 0 0 0 .849-.352l.192-.192h-.001Z"/>
                         </svg>
                     </ActionButton>
                 </NoteHeader>

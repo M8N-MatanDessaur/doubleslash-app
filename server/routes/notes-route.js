@@ -41,7 +41,7 @@ noteRouter.put('/editNote/:id', (req, res) => {
         .catch(err => console.error(err))
 })
 
-// Delete note whit id
+// Eric Gendron
 noteRouter.delete('/deleteNote/:id', (req, res) => {
     const id = req.params.id;
     noteModel.findByIdAndDelete(id)

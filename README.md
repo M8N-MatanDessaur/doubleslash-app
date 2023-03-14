@@ -39,15 +39,3 @@
   dateCreated {type : date} 
 }  
 ```
-
-
----
----
-
-# Task
-> Developer : Eric \
-> Date      : 14-03-2023 \
-> task      : Back and front : delete note 
-
----
----
