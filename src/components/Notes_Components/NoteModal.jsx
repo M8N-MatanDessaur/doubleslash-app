@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-export default function NoteModal({ modalOpen, closeModal, selectedId, notes }) {
+export default function NoteModal({ modalOpen, closeModal, selectedId, selectedCard, notes }) {
 
     const [newNote, setNewNote] = useState({
         author: '',
@@ -14,24 +14,28 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, notes }) 
 
     useEffect(()=> {
         setNewNote({
-            author: notes[selectedId].author,
-            title: notes[selectedId].title,
-            body: notes[selectedId].body,
-            extention: notes[selectedId].extention,
-            dateCreated: notes[selectedId].dateCreated,
-            dateModified: '',
+            author: notes[selectedCard].author,
+            title: notes[selectedCard].title,
+            body: notes[selectedCard].body,
+            extention: notes[selectedCard].extention,
+            dateCreated: notes[selectedCard].dateCreated,
+            dateModified: notes[selectedCard].dateModified,
         })
-    },[ selectedId, notes]) 
+    },[selectedCard, notes]) 
 
     const handleChange = event => {
+        setNewNote(prevState => ({ ...prevState, [event.target.name]: event.target.value }))
+    }
 
+    const editNote = () => {
+        closeModal()
     }
 
     return (
-        <Overlay style={modalOpen} onClick={closeModal}>
+        <Overlay style={modalOpen} onClick={editNote}>
             <NotePad onClick={event => event.stopPropagation()}>
                 <NoteHeader>
-                    <ActionButton onClick={closeModal}>
+                    <ActionButton onClick={editNote}>
                         <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z"></path>
                         </svg>
@@ -43,7 +47,7 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, notes }) 
                     </ActionButton>
                 </NoteHeader>
                 <NoteBody>
-                    <NoteTitle type="text" name="title" value={`//${newNote.title}`} onChange={handleChange} />
+                    <NoteTitle type="text" name="title" value={`${newNote.title}`} onChange={handleChange} />
                     <Note name="body" spellcheck="false" value={newNote.body.toString()} onChange={handleChange}></Note>
                 </NoteBody>
                 <NoteExtention type="text" name="extention" value={newNote.extention} onChange={handleChange}/>
