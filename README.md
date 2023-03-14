@@ -39,18 +39,3 @@
   dateCreated {type : date} 
 }  
 ```
-
-
----
----
-
-# Task
-> Developer : Matan \
-> Date      : 14-03-2023 \
-> Task      : 
-
----
----
-
-
-
