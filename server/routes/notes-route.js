@@ -22,4 +22,23 @@ noteRouter.get('/notes', (req, res) => {
     })
 });
 
+noteRouter.put('/editNote/:id', (req,res)=>{
+    const id = req.params.id;
+    noteModel.findById(id)
+    .then(
+        editedNote => {
+        editedNote.author = req.body.author;
+        editedNote.title = req.body.title;
+        editedNote.body = req.body.body;
+        editedNote.extention = req.body.extention;
+        editedNote.dateCreated = req.body.dateCreated;
+        editedNote.dateModified = req.body.dateModified;
+
+        editedNote.save()
+        .then(res.status(200))
+        .catch(err=>console.error(err))
+    })
+    .catch(err=>console.error(err))
+})
+
 module.exports = noteRouter;
