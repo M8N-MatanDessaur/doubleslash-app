@@ -69,3 +69,7 @@ body {
 code {
   font-family: var(--code-font)
 }
+
+div, section, article {
+  transition: all 200ms ease-in-out;
+}

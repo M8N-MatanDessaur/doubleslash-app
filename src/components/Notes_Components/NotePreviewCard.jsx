@@ -10,6 +10,8 @@ export default function NotePreviewCard({ openModal, noteBody, noteTitle, noteEx
                 value={noteBody}
                 language={noteExtention}
                 name="body"
+                contentEditable="false"
+                disabled="true"
                 style={{
                     height: "85%",
                     padding: "8.75px",
@@ -35,6 +37,11 @@ padding:17.5px;
 border-radius:5px;
 border: solid 2px #CCCCCC40;
 font-size:0.8rem;
+
+&:is(:hover, :focus-visible){
+    transform: scale(1.05);
+    border: solid 2px var(--accent-color-lighter);
+  }
 
 value : ${props => props.noteId}
 `;
