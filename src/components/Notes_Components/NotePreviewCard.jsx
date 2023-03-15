@@ -1,11 +1,34 @@
 import React from "react";
 import styled from "styled-components";
+import CodeEditor from '@uiw/react-textarea-code-editor';
 
-export default function NotePreviewCard({openModal, noteBody, noteTitle, noteExtention, noteId, cardId}){
-    return(
-        <NoteCard onClick={openModal} id={cardId} data-note={noteId}>
+export default function NotePreviewCard({ openModal, noteBody, noteTitle, noteExtention, noteId, cardId }) {
+    const lang = 
+    (noteExtention === 'js') ? {borderColor:"#e8d44d40"} : 
+    (noteExtention === 'php') ? {borderColor:"#4380b040"} : 
+    (noteExtention === 'html') ? {borderColor:"#e8622840"} : 
+    (noteExtention === 'jsx') ? {borderColor:"#5ed4f340"} : 
+    (noteExtention === 'xml') ? {borderColor:"#89b94240"} : 
+    {borderColor:"#CCCCCC40"} 
+    return (
+        <NoteCard onClick={openModal} id={cardId} data-note={noteId} style={lang}>
             <h3>{noteTitle}</h3>
-            <code><Text>{noteBody}</Text></code>
+            <CodeEditor 
+                value={noteBody}
+                language={noteExtention}
+                name="body"
+                contentEditable={false}
+                disabled={true}
+                style={{
+                    height: "70%",
+                    overflow: "hidden",
+                    whiteSpace:"pre !important",
+                    fontSize: "smaller",
+                    fontFamily: "var(--code-font)",
+                    backgroundColor:"transparent",
+                }}
+                />
+                
             <Extention>{noteExtention}</Extention>
         </NoteCard>
     )
@@ -22,6 +45,11 @@ border-radius:5px;
 border: solid 2px #CCCCCC40;
 font-size:0.8rem;
 
+&:is(:hover, :focus-visible){
+    transform: scale(1.05);
+    border: solid 2px var(--accent-color-lighter);
+  }
+
 value : ${props => props.noteId}
 `;
 
@@ -32,12 +60,11 @@ right:10px;
 color:#CCCCCC40;
 `;
 
-const Text = styled.pre`
-height:-webkit-fill-available;
-height:100%;
-padding:8.75px;
-overflow: hidden;
-white-space:pre;
-font-size: smaller;
-font-family: var(--code-font);
-`;
+// const Text = styled.pre`
+// height:85%;
+// padding:8.75px;
+// overflow: hidden;
+// white-space:pre;
+// font-size: smaller;
+// font-family: var(--code-font);
+// `;
