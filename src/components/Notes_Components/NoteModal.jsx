@@ -71,11 +71,11 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
                             language={newNote.extention}
                             onChange={handleChange}
                             name="body"
-                            padding={15}
+                            padding={8.75}
                             style={{
                                  height:"100%",
                                  background: "var(--foreground-color)",
-                                 fontFamily:"var(--code-font)"
+                                 fontFamily:"var(--code-font)",
                             }}
                         />
 

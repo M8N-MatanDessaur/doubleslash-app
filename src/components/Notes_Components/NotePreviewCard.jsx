@@ -10,7 +10,6 @@ export default function NotePreviewCard({ openModal, noteBody, noteTitle, noteEx
                 value={noteBody}
                 language={noteExtention}
                 name="body"
-                padding={15}
                 style={{
                     height: "85%",
                     padding: "8.75px",

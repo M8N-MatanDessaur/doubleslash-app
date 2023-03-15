@@ -28,7 +28,6 @@ const App = () => {
   const { data: notes, error } = useSWR('http://localhost:4040/notes/notes', fetcher);
   if (error) return <div>Error loading notes</div>;
   if (!notes) return <div>Loading...</div>;
-
   return (
     <div className='App'>
       <MainLayout openModal={openModal} notes={notes} />

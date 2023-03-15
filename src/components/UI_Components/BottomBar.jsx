@@ -5,10 +5,10 @@ import styled from "styled-components";
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function BottomBar({newNote}) {
+export default function BottomBar({newNote, searchNote}) {
     return (
         <Footer>
-            <NoteSearch type="search" name="search-notes" placeholder="Search your notes"/>
+            <NoteSearch onChange={searchNote} type="search" name="search-notes" placeholder="Search your notes"/>
             <Fab onClick={newNote} size="medium" color="success" aria-label="add" sx={{minWidth: "48px !important"}}><AddIcon /></Fab>
         </Footer>
     )
