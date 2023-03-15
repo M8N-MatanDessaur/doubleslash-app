@@ -7,14 +7,21 @@ userRouter.use(express.json());
 
 // CREATE NEW USER
 userRouter.post("/newUser", (req, res) => {
-  const newUser = new userModel(req.body);
-  newUser
-    .save()
-    .then(() => {
-      res.send("User saved successfuly");
+  const email = req.body.email;
+  userModel
+    .findOne({ email: email })
+    .then((email) => {
+      if (email) {
+        return res
+          .status(400)
+          .send("User already exists with that email address");
+      } else {
+        const newUser = new userModel(req.body);
+        return newUser.save().send("User saved successfully");
+      }
     })
     .catch((err) => {
-      res.status(500).send("Error saving user" + err);
+      return res.status(500).send("Error saving user: " + err);
     });
 });
 
@@ -63,14 +70,44 @@ userRouter.delete("/deleteUser/:id", (req, res) => {
     });
 });
 
-// GET ONE USER
+// GET ONE USER BY ID
 userRouter.get("/getUser/:id", (req, res) => {
   const id = req.params.id;
   userModel
     .findById(id)
     .exec()
-    .then((send) => res.status(200).json(send))
-    .catch((err) => res.status(400).json("Error with id : " + err));
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      res.status(200).json(user);
+    })
+    .catch((err) => res.status(400).json({ message: "User not found " }));
+});
+
+// GET ONE USER BY EMAIL
+userRouter.get("/getUserByEmail/:email", (req, res) => {
+  const email = req.params.email;
+  userModel
+    .findOne({ email: email })
+    .exec()
+    .then((user) => {
+      if (!user) {
+        return res
+          .status(200)
+          .json({
+            message: "Email is available. Proceed with creating a new account.",
+          });
+      }
+      res
+        .status(400)
+        .json({
+          message: "Email is already in use. Please use a different email.",
+        });
+    })
+    .catch((err) =>
+      res.status(500).json({ message: "Error finding user: " + err })
+    );
 });
 
 module.exports = userRouter;
