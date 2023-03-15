@@ -38,10 +38,10 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
         closeModal()
     }
     // *Eric Gendron
-    const deleteNote = async () => {
+    const deleteNote = () => {
         try {
-            await axios.delete(`http://localhost:4040/notes/deleteNote/${selectedId}`);
-            await mutate('http://localhost:4040/notes/notes');
+             axios.delete(`http://localhost:4040/notes/deleteNote/${selectedId}`);
+             mutate('http://localhost:4040/notes/notes');
             window.location.reload(false);
         } catch (err) {
             console.log(err);
@@ -81,7 +81,7 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
 
                 </NoteBody>
                 <NoteExtention type="text" name="extention" value={newNote.extention} onChange={handleChange} />
-                <NoteFooter>{`Date Modified ${newNote.dateModified}`}</NoteFooter>
+                <NoteFooter>{`Date Modified ${newNote.dateModified}`.split('T')[0]}</NoteFooter>
             </NotePad>
         </Overlay>
     )

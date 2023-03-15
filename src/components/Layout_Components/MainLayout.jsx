@@ -16,8 +16,8 @@ export default function MainLayout({openModal, notes}){
         title: '//',
         body: '',
         extention: '.txt',
-        dateCreated: '2023-01-01',
-        dateModified: '2023-01-01',
+        dateCreated: Date.now,
+        dateModified: Date.now,
     }
 
     const [search, setSearch] = useState("");
