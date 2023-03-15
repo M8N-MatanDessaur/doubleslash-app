@@ -3,25 +3,32 @@ import styled from "styled-components";
 import CodeEditor from '@uiw/react-textarea-code-editor';
 
 export default function NotePreviewCard({ openModal, noteBody, noteTitle, noteExtention, noteId, cardId }) {
+    const lang = 
+    (noteExtention === 'js') ? {borderColor:"#e8d44d40"} : 
+    (noteExtention === 'php') ? {borderColor:"#4380b040"} : 
+    (noteExtention === 'html') ? {borderColor:"#e8622840"} : 
+    (noteExtention === 'jsx') ? {borderColor:"#5ed4f340"} : 
+    (noteExtention === 'xml') ? {borderColor:"#89b94240"} : 
+    {borderColor:"#CCCCCC40"} 
     return (
-        <NoteCard onClick={openModal} id={cardId} data-note={noteId}>
+        <NoteCard onClick={openModal} id={cardId} data-note={noteId} style={lang}>
             <h3>{noteTitle}</h3>
-            <CodeEditor
+            <CodeEditor 
                 value={noteBody}
                 language={noteExtention}
                 name="body"
-                contentEditable="false"
-                disabled="true"
+                contentEditable={false}
+                disabled={true}
                 style={{
-                    height: "85%",
-                    padding: "8.75px",
+                    height: "70%",
                     overflow: "hidden",
                     whiteSpace:"pre !important",
                     fontSize: "smaller",
                     fontFamily: "var(--code-font)",
                     backgroundColor:"transparent",
-                            }}
-                        />
+                }}
+                />
+                
             <Extention>{noteExtention}</Extention>
         </NoteCard>
     )

@@ -37,7 +37,7 @@ export default function MainLayout({openModal, notes}){
         <>
             <TopBar/>
             <ContentContainer>
-                {notes.map((note, index) => (note.title.includes(search)) ? <NotePreviewCard key={index} cardId={index} openModal={openModal} noteBody={note.body} noteTitle={note.title} noteExtention={note.extention} noteId={note._id}/> : <></>)}
+                {notes.map((note, index) => (note.title.includes(search)||note.title.includes(search.toLowerCase())||note.title.includes(search.toUpperCase())||note.title.includes(search.charAt(0).toUpperCase() + search.slice(1))) ? <NotePreviewCard key={index} cardId={index} openModal={openModal} noteBody={note.body} noteTitle={note.title} noteExtention={note.extention} noteId={note._id}/> : <></>)}
             </ContentContainer>
             <BottomBar newNote={newNote} searchNote={searchNote}/>
         </>
