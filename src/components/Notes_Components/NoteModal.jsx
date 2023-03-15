@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mutate } from "swr";
+import CodeEditor from '@uiw/react-textarea-code-editor';
 
 export default function NoteModal({ modalOpen, closeModal, selectedId, selectedCard, notes }) {
 
@@ -14,7 +15,7 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
         dateModified: '',
     })
 
-    useEffect(()=> {
+    useEffect(() => {
         setNewNote({
             author: notes[selectedCard].author,
             title: notes[selectedCard].title,
@@ -23,7 +24,7 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
             dateCreated: notes[selectedCard].dateCreated,
             dateModified: notes[selectedCard].dateModified,
         })
-    },[selectedCard, notes]) 
+    }, [selectedCard, notes])
 
     const handleChange = event => {
         setNewNote(prevState => ({ ...prevState, [event.target.name]: event.target.value }))
@@ -31,21 +32,21 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
 
     const editNote = () => {
         axios.put(`http://localhost:4040/notes/editNote/${selectedId}`, newNote)
-        .then((res) => {console.log(res.data)})
-        .catch((err) => console.log(err))
+            .then((res) => { console.log(res.data) })
+            .catch((err) => console.log(err))
 
         closeModal()
     }
-// *Eric Gendron
+    // *Eric Gendron
     const deleteNote = async () => {
         try {
-          await axios.delete(`http://localhost:4040/notes/deleteNote/${selectedId}`);
-          await mutate('http://localhost:4040/notes/notes');
-          window.location.reload(false);
+            await axios.delete(`http://localhost:4040/notes/deleteNote/${selectedId}`);
+            await mutate('http://localhost:4040/notes/notes');
+            window.location.reload(false);
         } catch (err) {
-          console.log(err);
+            console.log(err);
         }
-      }
+    }
 
     return (
         <Overlay style={modalOpen} onClick={editNote}>
@@ -53,20 +54,33 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
                 <NoteHeader>
                     <ActionButton onClick={editNote}>
                         <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z"/>
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z" />
                         </svg>
                     </ActionButton>
                     <ActionButton onClick={deleteNote}>
                         <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.583 4.569a2.4 2.4 0 0 1 3.393 0l4.655 4.655a2.4 2.4 0 0 1 0 3.393l-6.6 6.6a2.4 2.4 0 0 1-1.697.704h-3.31a2.4 2.4 0 0 1-1.697-.704l-3-3a2.4 2.4 0 0 1 0-3.393l8.255-8.255Zm2.545.848a1.2 1.2 0 0 0-1.697 0l-5.56 5.56 6.352 6.351 5.56-5.56a1.2 1.2 0 0 0 0-1.696l-4.655-4.655Zm-1.753 12.76-6.352-6.352-1.847 1.847a1.2 1.2 0 0 0 0 1.697l3 3a1.2 1.2 0 0 0 .849.352h3.31a1.2 1.2 0 0 0 .849-.352l.192-.192h-.001Z"/>
+                            <path d="M12.583 4.569a2.4 2.4 0 0 1 3.393 0l4.655 4.655a2.4 2.4 0 0 1 0 3.393l-6.6 6.6a2.4 2.4 0 0 1-1.697.704h-3.31a2.4 2.4 0 0 1-1.697-.704l-3-3a2.4 2.4 0 0 1 0-3.393l8.255-8.255Zm2.545.848a1.2 1.2 0 0 0-1.697 0l-5.56 5.56 6.352 6.351 5.56-5.56a1.2 1.2 0 0 0 0-1.696l-4.655-4.655Zm-1.753 12.76-6.352-6.352-1.847 1.847a1.2 1.2 0 0 0 0 1.697l3 3a1.2 1.2 0 0 0 .849.352h3.31a1.2 1.2 0 0 0 .849-.352l.192-.192h-.001Z" />
                         </svg>
                     </ActionButton>
                 </NoteHeader>
                 <NoteBody>
                     <NoteTitle type="text" name="title" value={`${newNote.title}`} onChange={handleChange} />
-                    <Note name="body" spellcheck="false" value={newNote.body.toString()} onChange={handleChange}></Note>
+  
+                        <CodeEditor
+                            value={newNote.body}
+                            language={newNote.extention}
+                            onChange={handleChange}
+                            name="body"
+                            padding={15}
+                            style={{
+                                 height:"100%",
+                                 background: "var(--foreground-color)",
+                                 fontFamily:"var(--code-font)"
+                            }}
+                        />
+
                 </NoteBody>
-                <NoteExtention type="text" name="extention" value={newNote.extention} onChange={handleChange}/>
+                <NoteExtention type="text" name="extention" value={newNote.extention} onChange={handleChange} />
                 <NoteFooter>{`Date Modified ${newNote.dateModified}`}</NoteFooter>
             </NotePad>
         </Overlay>
@@ -183,22 +197,22 @@ const NoteTitle = styled.input`
         font-size: 1.2rem;
     `;
 
-const Note = styled.textarea`
-        outline:none;
-        height: -webkit-fill-available;
-        height: -moz-available;
-        width:-webkit-fill-available;
-        width:-moz-available;
-        padding: 8.75px;
-        display:block;
-        white-space: pre-line;
-        font-family: var(--code-font);
-        background-color: transparent;
-        color:var(--text-color);
-        border:none;
-        resize:none;
-        caret-color: var(--accent-color-lighter) 
-    `;
+// const Note = styled.textarea`
+//         outline:none;
+//         height: -webkit-fill-available;
+//         height: -moz-available;
+//         width:-webkit-fill-available;
+//         width:-moz-available;
+//         padding: 8.75px;
+//         display:block;
+//         white-space: pre-line;
+//         font-family: var(--code-font);
+//         background-color: transparent;
+//         color:var(--text-color);
+//         border:none;
+//         resize:none;
+//         caret-color: var(--accent-color-lighter) 
+//     `;
 
 const NoteExtention = styled.input`
         position:absolute;

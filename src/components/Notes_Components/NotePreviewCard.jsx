@@ -1,11 +1,26 @@
 import React from "react";
 import styled from "styled-components";
+import CodeEditor from '@uiw/react-textarea-code-editor';
 
-export default function NotePreviewCard({openModal, noteBody, noteTitle, noteExtention, noteId, cardId}){
-    return(
+export default function NotePreviewCard({ openModal, noteBody, noteTitle, noteExtention, noteId, cardId }) {
+    return (
         <NoteCard onClick={openModal} id={cardId} data-note={noteId}>
             <h3>{noteTitle}</h3>
-            <code><Text>{noteBody}</Text></code>
+            <CodeEditor
+                value={noteBody}
+                language={noteExtention}
+                name="body"
+                padding={15}
+                style={{
+                    height: "85%",
+                    padding: "8.75px",
+                    overflow: "hidden",
+                    whiteSpace:"pre !important",
+                    fontSize: "smaller",
+                    fontFamily: "var(--code-font)",
+                    backgroundColor:"transparent",
+                            }}
+                        />
             <Extention>{noteExtention}</Extention>
         </NoteCard>
     )
@@ -32,12 +47,11 @@ right:10px;
 color:#CCCCCC40;
 `;
 
-const Text = styled.pre`
-height:-webkit-fill-available;
-height:85%;
-padding:8.75px;
-overflow: hidden;
-white-space:pre;
-font-size: smaller;
-font-family: var(--code-font);
-`;
+// const Text = styled.pre`
+// height:85%;
+// padding:8.75px;
+// overflow: hidden;
+// white-space:pre;
+// font-size: smaller;
+// font-family: var(--code-font);
+// `;
