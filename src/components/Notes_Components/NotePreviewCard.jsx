@@ -4,11 +4,13 @@ import CodeEditor from '@uiw/react-textarea-code-editor';
 
 export default function NotePreviewCard({ openModal, noteBody, noteTitle, noteExtention, noteId, cardId }) {
     const lang = 
-    (noteExtention === 'js') ? {borderColor:"#e8d44d40"} : 
-    (noteExtention === 'php') ? {borderColor:"#4380b040"} : 
-    (noteExtention === 'html') ? {borderColor:"#e8622840"} : 
-    (noteExtention === 'jsx') ? {borderColor:"#5ed4f340"} : 
-    (noteExtention === 'xml') ? {borderColor:"#89b94240"} : 
+    (noteExtention === 'js') ? {borderColor:"#e8d44d60"} : 
+    (noteExtention === 'php') ? {borderColor:"#53509080"} : 
+    (noteExtention === 'html') ? {borderColor:"#e8622860"} : 
+    (noteExtention === 'jsx') ? {borderColor:"#5ed4f360"} : 
+    (noteExtention === 'xml') ? {borderColor:"#89b94260"} : 
+    (noteExtention === 'py') ? {borderColor:"#366e9d60"} : 
+    (noteExtention === 'java') ? {borderColor:"#7c007c80"} : 
     {borderColor:"#CCCCCC40"} 
     return (
         <NoteCard onClick={openModal} id={cardId} data-note={noteId} style={lang}>
@@ -48,7 +50,7 @@ background-color: var(--foreground-color);
 
 &:is(:hover, :focus-visible){
     transform: scale(1.05);
-    border: solid 2px var(--accent-color-lighter);
+    border: solid 2px var(--accent-color-lighter) !important;
   }
 
 value : ${props => props.noteId}
