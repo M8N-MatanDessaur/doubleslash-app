@@ -44,6 +44,7 @@ padding:17.5px;
 border-radius:5px;
 border: solid 2px #CCCCCC40;
 font-size:0.8rem;
+background-color: var(--foreground-color);
 
 &:is(:hover, :focus-visible){
     transform: scale(1.05);
