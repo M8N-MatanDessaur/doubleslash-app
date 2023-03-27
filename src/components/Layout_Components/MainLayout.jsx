@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { mutate } from "swr";
 import NotePreviewCard from "../Notes_Components/NotePreviewCard";
 
@@ -16,9 +16,11 @@ export default function MainLayout({openModal, notes, lightMode, stateMode}){
         title: '//',
         body: '',
         extention: '.txt',
-        dateCreated: '2023-01-01',
-        dateModified: '2023-01-01',
+        dateCreated: Date.now,
+        dateModified: Date.now,
     }
+
+    const [search, setSearch] = useState("");
 
     const newNote = () => {
         axios.post('http://127.0.0.1:4040/notes/newNote', emptyNote)
@@ -27,13 +29,17 @@ export default function MainLayout({openModal, notes, lightMode, stateMode}){
         window.location.reload(false); //! Temporary, until we use ROUTER
     }
 
+    const searchNote = (event) => {
+        setSearch(event.target.value)
+    }
+
     return(
         <>
             <TopBar lightMode={lightMode} stateMode={stateMode}/>
             <ContentContainer>
-                {notes.map((note, index) => <NotePreviewCard key={index} cardId={index} openModal={openModal} noteBody={note.body} noteTitle={note.title} noteExtention={note.extention} noteId={note._id}/>)}
+                {notes.map((note, index) => (note.title.includes(search)||note.title.includes(search.toLowerCase())||note.title.includes(search.toUpperCase())||note.title.includes(search.charAt(0).toUpperCase() + search.slice(1))) ? <NotePreviewCard key={index} cardId={index} openModal={openModal} noteBody={note.body} noteTitle={note.title} noteExtention={note.extention} noteId={note._id}/> : <></>)}
             </ContentContainer>
-            <BottomBar newNote={newNote}/>
+            <BottomBar newNote={newNote} searchNote={searchNote}/>
         </>
     )
 }
