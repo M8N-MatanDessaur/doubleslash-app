@@ -42,3 +42,12 @@
   dateCreated {type : date} 
 }  
 ```
+
+---
+---
+# Task
+> Developer : Lydia \
+> Date      : 14-03-2023 \
+> Task      : Buttom lightMode
+---
+---

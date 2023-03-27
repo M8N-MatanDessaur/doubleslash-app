@@ -8,7 +8,7 @@ import BottomBar from '../UI_Components/BottomBar';
 import ContentContainer from '../UI_Components/ContentContainer';
 import TopBar from '../UI_Components/TopBar';
 
-export default function MainLayout({openModal, notes}){
+export default function MainLayout({openModal, notes, lightMode, stateMode}){
     mutate('http://localhost:4040/notes/notes')
 
     const emptyNote = {
@@ -35,7 +35,7 @@ export default function MainLayout({openModal, notes}){
 
     return(
         <>
-            <TopBar/>
+            <TopBar lightMode={lightMode} stateMode={stateMode}/>
             <ContentContainer>
                 {notes.map((note, index) => (note.title.includes(search)||note.title.includes(search.toLowerCase())||note.title.includes(search.toUpperCase())||note.title.includes(search.charAt(0).toUpperCase() + search.slice(1))) ? <NotePreviewCard key={index} cardId={index} openModal={openModal} noteBody={note.body} noteTitle={note.title} noteExtention={note.extention} noteId={note._id}/> : <></>)}
             </ContentContainer>
