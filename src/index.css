@@ -44,15 +44,6 @@
 }
  
 
-/*:not(:root) {
-  /* Styles pour le mode sombre */
- /* --background-color:#1b5e20;
-  --foreground-color:#FFFFFF;
-  --text-color:#000000;
-  --accent-color:#FFFFFF;
-  --accent-color-lighter:#FFFFFF;
-}*/
-
 /* ScrollBar */
 ::-webkit-scrollbar {
   display: none;
