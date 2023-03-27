@@ -24,6 +24,27 @@ const App = () => {
   };
   //---------------------------------------------------------------//
 
+  //------------ButtonMode----------------------------------
+
+  const [isLightMode, setIsLightMode] = useState(false);
+
+//window.matchMedia('(prefers-color-scheme: dark)').matches
+  const lightMode =()=>{
+
+    if (isLightMode){
+      setIsLightMode(!isLightMode);
+      document.documentElement.setAttribute('data-color-mode', 'dark');
+      //localStorage.setItem('data-color-mode','dark');
+      
+    }
+    else{
+      setIsLightMode(!isLightMode);
+      document.documentElement.setAttribute('data-color-mode', 'light');
+      //localStorage.setItem('data-color-mode','light');
+    }
+  }
+  //-------------------------------------------------
+
   const fetcher = (url) => axios.get(url).then((res) => res.data);
   const { data: notes, error } = useSWR('http://localhost:4040/notes/notes', fetcher);
   if (error) return <div>Error loading notes</div>;
@@ -31,8 +52,8 @@ const App = () => {
 
   return (
     <div className='App'>
-      <MainLayout openModal={openModal} notes={notes} />
-      <NoteModal modalOpen={modalOpen} closeModal={closeModal} notes={notes} selectedId={selectedId} selectedCard={selectedCard}/>
+      <MainLayout openModal={openModal} notes={notes} lightMode={lightMode} stateMode={isLightMode} />
+      <NoteModal modalOpen={modalOpen} closeModal={closeModal}  notes={notes} selectedId={selectedId} selectedCard={selectedCard}/>
     </div>
   );
 }

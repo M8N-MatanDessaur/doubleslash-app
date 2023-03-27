@@ -11,6 +11,7 @@
 }
 
 /* ROOT Variables */
+
 :root{
   --text-font:'M PLUS Rounded 1c', sans-serif;
   --code-font:'Fira Code', monospace;
@@ -23,7 +24,34 @@
 
   --full-height:100svh;
   --full-width:100%;
+} 
+
+:root[data-color-mode="dark"]{
+  --accent-color:#6a9955;
+  --accent-color-lighter:#83c265;
+  --background-color: #202124;
+  --foreground-color: #202020;
+  --text-color:#f6f6f6;
+
+} 
+
+:root[data-color-mode="light"]{
+  --accent-color:#FFFFFF;
+  --accent-color-lighter:#FFFFFF;
+  --background-color: #1b5e20;
+  --foreground-color: #FFFFFF;
+  --text-color:#000000;
 }
+ 
+
+/*:not(:root) {
+  /* Styles pour le mode sombre */
+ /* --background-color:#1b5e20;
+  --foreground-color:#FFFFFF;
+  --text-color:#000000;
+  --accent-color:#FFFFFF;
+  --accent-color-lighter:#FFFFFF;
+}*/
 
 /* ScrollBar */
 ::-webkit-scrollbar {
