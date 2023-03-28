@@ -33,8 +33,8 @@ export default function ButtonDarkLight() {
 }
 const ButtonMode = styled.button `
 position : absolute;
-top: 28px;
-right: 100px;
+bottom: 15px;
+left: 35px;
 width:fit-content;
 outline:none;
 border:none;

@@ -4,7 +4,7 @@ import React  from "react";
 import styled from "styled-components";
 import profileDefault from '../../assets/images/default.jpg'
 
-export default function TopBar({title="//DoubleSlash", profileImage=profileDefault, lightMode, stateMode}){
+export default function TopBar({title="//", profileImage=profileDefault, lightMode, stateMode}){
     return(
         <Header>
             <Title>{title}</Title>
