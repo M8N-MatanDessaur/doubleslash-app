@@ -32,6 +32,7 @@
   --background-color: #202124;
   --foreground-color: #202020;
   --text-color:#f6f6f6;
+  --comment-color:#6a9955;
 
 } 
 
@@ -41,6 +42,7 @@
   --background-color: #1b5e20;
   --foreground-color: #FFFFFF;
   --text-color:#000000;
+  --comment-color:#989898;
 }
  
 
