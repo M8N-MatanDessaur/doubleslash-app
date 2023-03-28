@@ -9,7 +9,6 @@ import ContentContainer from '../UI_Components/ContentContainer';
 import TopBar from '../UI_Components/TopBar';
 
 export default function MainLayout({openModal, notes, lightMode, stateMode}){
-    mutate('http://localhost:4040/notes/notes')
 
     const emptyNote = {
         author: notes.author,
@@ -24,9 +23,14 @@ export default function MainLayout({openModal, notes, lightMode, stateMode}){
 
     const newNote = () => {
         axios.post('http://127.0.0.1:4040/notes/newNote', emptyNote)
-        .then((res)=>{console.log(res)})
-
-        window.location.reload(false); //! Temporary, until we use ROUTER
+        .then((res)=>{
+            const newNotes = [...notes, res.data]; 
+            mutate(newNotes, false);
+            axios.get('http://localhost:4040/notes/notes')
+            .then((res) => {
+                mutate('http://localhost:4040/notes/notes', res.data);
+              })
+        })
     }
 
     const searchNote = (event) => {

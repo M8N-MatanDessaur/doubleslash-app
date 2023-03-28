@@ -44,5 +44,9 @@ const Footer = styled.footer`
     color:var(--text-color);
     outline:none;
     font-size:1.1rem;
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: white;
+        opacity: 1; /* Firefox */
+}
     `;
 

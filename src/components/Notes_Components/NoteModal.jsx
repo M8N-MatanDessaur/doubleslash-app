@@ -34,16 +34,15 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
         axios.put(`http://localhost:4040/notes/editNote/${selectedId}`, newNote)
             .then((res) => { console.log(res.data) })
             .catch((err) => console.log(err))
-
         closeModal()
     }
     // *Eric Gendron
     const deleteNote = () => {
         try {
-             axios.delete(`http://localhost:4040/notes/deleteNote/${selectedId}`);
-             mutate('http://localhost:4040/notes/notes');
+            axios.delete(`http://localhost:4040/notes/deleteNote/${selectedId}`)
             window.location.reload(false);
-        } catch (err) {
+        } 
+        catch (err) {
             console.log(err);
         }
     }
@@ -142,8 +141,8 @@ const NoteFooter = styled.div`
         place-content:center;
         border-bottom-left-radius: 3px;
         border-bottom-right-radius: 3px;
-        background:#CCCCCC10;
-        color:#CCCCCC60;
+        background:#CCCCCC20;
+        color:var(--text-color);
         font-size:0.8rem;
     `;
 
@@ -190,29 +189,12 @@ const NoteTitle = styled.input`
         width:-moz-available;
         padding: 8.75px;
         background-color: transparent;
-        color: var(--accent-color-lighter);
+        color: var(--text-color);
         outline:none;
         border-radius:50px;
         border: solid 2px #2b2b2b;
         font-size: 1.2rem;
     `;
-
-// const Note = styled.textarea`
-//         outline:none;
-//         height: -webkit-fill-available;
-//         height: -moz-available;
-//         width:-webkit-fill-available;
-//         width:-moz-available;
-//         padding: 8.75px;
-//         display:block;
-//         white-space: pre-line;
-//         font-family: var(--code-font);
-//         background-color: transparent;
-//         color:var(--text-color);
-//         border:none;
-//         resize:none;
-//         caret-color: var(--accent-color-lighter) 
-//     `;
 
 const NoteExtention = styled.input`
         position:absolute;
@@ -221,7 +203,7 @@ const NoteExtention = styled.input`
         bottom: 62.5px;
         right: 17.5px;
         background-color: transparent;
-        color: var(--accent-color-lighter);
+        color: var(--text-color);
         outline:none;
         border-radius:50px;
         border: solid 2px #2b2b2b;
