@@ -12,15 +12,23 @@ export default function MyNotes() {
   
     //----Modal visibility state-------------------------------------//
     const [modalOpen, setModalOpen] = useState({ display: "none" }); //> Initialise Modal state to display None
+
     const closeModal = () => { 
-      mutate('http://localhost:4040/notes/notes')
-      setModalOpen({ display: "none" }) 
+      axios.get('http://localhost:4040/notes/notes')
+      .then((res) => {
+        mutate('http://localhost:4040/notes/notes', res.data);
+        setModalOpen({ display: "none" });
+      })
     };                                                              
+    
     const openModal = (e, noteId) => {   
-      mutate('http://localhost:4040/notes/notes') //! to test                           
-      setModalOpen({ display: "grid" })
-      setselectedCard(e.currentTarget.id);                           //> Get the card ID
-      setSelectedId(e.currentTarget.getAttribute('data-note'))       //> Get the note ID
+      axios.get('http://localhost:4040/notes/notes')
+      .then((res) => {
+        mutate('http://localhost:4040/notes/notes', res.data); 
+      })
+      setModalOpen({ display: "grid" });
+      setselectedCard(e.currentTarget.id); //> Get the card ID
+      setSelectedId(e.currentTarget.getAttribute('data-note')) //> Get the note ID
     };
     //---------------------------------------------------------------//
   
