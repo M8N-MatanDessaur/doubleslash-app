@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { toast } from "react-hot-toast"
 import { useNavigate } from "react-router-dom";
@@ -6,19 +6,24 @@ import styled from "styled-components";
 import { fontFamily } from "@mui/system";
 
 const LoginForm = () => {
-
-    const [loginInfo, setLoginInfo] = useState({ first_name: '', last_name: '', email: '', password: '' })
     const navigate = useNavigate()
+
+    const [loginInfo, setLoginInfo] = useState({email: '', password: '' })
     const handleChange = (e) => {
         setLoginInfo(prevState => ({ ...prevState, [e.target.name]: e.target.value }))
     }
 
-
+    useEffect(()=>{
+        if (sessionStorage.length !== 0) {
+            navigate('/notes');
+        }
+    })
+    
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
-            const findUser = await fetch(`http://127.0.0.1:3500/routes/User/${loginInfo.email}`)
+            const findUser = await fetch(`http://127.0.0.1:4040/users/getUserByEmail/${loginInfo.email}`)
             const foundUser = await findUser.json();
 
             // check if user exists in DataBase
@@ -29,9 +34,13 @@ const LoginForm = () => {
                 if (loginInfo.password === foundUser[0].password) {
                     toast.success(`Connection`)
                     sessionStorage.setItem("connectedUser", foundUser[0].email);
-                    navigate('/inbox')
+                    sessionStorage.setItem("profile", foundUser[0].avatar);
+                    sessionStorage.setItem("firstName", foundUser[0].firstName);
+                    sessionStorage.setItem("lastName", foundUser[0].lastName);
+                    navigate('/notes')
                 }
                 else {
+                    console.log(foundUser[0].password)
                     toast.error('Email or Password Inccorect');
                 }
             }
@@ -48,17 +57,17 @@ const LoginForm = () => {
                 <FormGroup>
                     <Num>1.&nbsp; </Num>
                     <Label htmlFor="email"><Const>const</Const> email = </Label>
-                    <Input type="email" name="email" id="" />
+                    <Input type="email" name="email" id="" onChange={handleChange}/>
                 </FormGroup>
 
                 <FormGroup>
                     <Num>2.&nbsp; </Num>
-                    <Label htmlFor="pass"><Const>const</Const> password = </Label>
-                    <Input type="password" name="pass" id="" />
+                    <Label htmlFor="password"><Const>const</Const> password = </Label>
+                    <Input type="password" name="password" id="" onChange={handleChange}/>
                 </FormGroup>
 
                 <FormGroup>
-                    <Button type="submit">
+                    <Button type="submit" title="run" onClick={handleSubmit}>
                         <svg width="29" height="29" fill="var(--text-color)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="m16.315 13.316-7.635 4.43c-.648.376-1.48-.079-1.48-.836V8.05c0-.757.83-1.213 1.48-.836l7.635 4.43a.963.963 0 0 1 0 1.672Z"></path>
                         </svg>
@@ -119,6 +128,13 @@ const Button = styled.button`
     position:absolute;
     top:5px;
     right:5px;
+
+    transition: all 100ms;
+
+    :hover{
+        opacity:0.5;
+        transform: scale(1.2);
+    }
 `;
 
 const Input = styled.input`

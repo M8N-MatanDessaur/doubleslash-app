@@ -4,13 +4,14 @@ import { toast } from "react-hot-toast"
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { fontFamily } from "@mui/system";
+import axios from "axios";
 
 const LoginForm = () => {
 
-    const [loginInfo, setLoginInfo] = useState({ first_name: '', last_name: '', email: '', password: '' })
+    const [signupInfo, setSignupInfo] = useState({avatar: '', firstName: '', lastName: '', email: '', password: '' })
     const navigate = useNavigate()
     const handleChange = (e) => {
-        setLoginInfo(prevState => ({ ...prevState, [e.target.name]: e.target.value }))
+        setSignupInfo(prevState => ({ ...prevState, [e.target.name]: e.target.value }))
     }
 
 
@@ -18,26 +19,25 @@ const LoginForm = () => {
         e.preventDefault()
 
         try {
-            const findUser = await fetch(`http://127.0.0.1:3500/routes/User/${loginInfo.email}`)
+            const findUser = await fetch(`http://127.0.0.1:4040/users/getUserByEmail/${signupInfo.email}`)
             const foundUser = await findUser.json();
 
             // check if user exists in DataBase
-            if (foundUser.length === 0) {
-                toast.error(`User does not exists, Sign Up`)
+            if (foundUser.length !== 0) {
+                toast.error(`User exists, Login instead`)
             }
             else {
-                if (loginInfo.password === foundUser[0].password) {
-                    toast.success(`Connection`)
-                    sessionStorage.setItem("connectedUser", foundUser[0].email);
-                    navigate('/inbox')
-                }
-                else {
-                    toast.error('Email or Password Inccorect');
-                }
+                axios
+                .post('http://127.0.0.1:4040/users/newUser', signupInfo)
+                .then((res) => {
+                  toast.success(`Welcome`)
+                  navigate("/login")
+                })
+                .catch((err) => console.log(err)) //Catch if any errors
             }
         }
         catch {
-            toast.error('Email or Password Inccorect');
+            toast.error('An error has occured, try again');
         }
     }
     return (
@@ -48,35 +48,35 @@ const LoginForm = () => {
                 <FormGroup>
                     <Num>1.&nbsp; </Num>
                     <Label htmlFor="email"><Const>const</Const> email = </Label>
-                    <Input type="email" name="email" id="" />
+                    <Input type="email" name="email" id="" onChange={handleChange} />
                 </FormGroup>
 
                 <FormGroup>
                     <Num>2.&nbsp; </Num>
                     <Label htmlFor="pass"><Const>const</Const> password = </Label>
-                    <Input type="password" name="pass" id="" />
+                    <Input type="password" name="password" id="" onChange={handleChange}/>
                 </FormGroup>
 
                 <FormGroup>
                     <Num>3.&nbsp; </Num>
                     <Label htmlFor="firstName"><Const>const</Const> firstName = </Label>
-                    <Input type="text" name="fname" id="" />
+                    <Input type="text" name="firstName" id="" onChange={handleChange}/>
                 </FormGroup>
 
                 <FormGroup>
                     <Num>4.&nbsp; </Num>
                     <Label htmlFor="lastName"><Const>const</Const> lastName = </Label>
-                    <Input type="text" name="lname" id="" />
+                    <Input type="text" name="lasName" id="" onChange={handleChange}/>
                 </FormGroup>
 
                 <FormGroup>
                     <Num>5.&nbsp; </Num>
-                    <Label htmlFor="text"><Const>const</Const> profilePicture = </Label>
-                    &nbsp;url(<Input type="file" name="avatar" id="" />)
+                    <Label htmlFor="avatar"><Const>const</Const> profilePicture = </Label>
+                    &nbsp;url(<Input type="file" name="avatar" id="" onChange={handleChange}/>)
                 </FormGroup>
 
                 <FormGroup>
-                    <Button type="submit">
+                    <Button type="submit" title="run" onClick={handleSubmit}>
                         <svg width="29" height="29" fill="var(--text-color)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="m16.315 13.316-7.635 4.43c-.648.376-1.48-.079-1.48-.836V8.05c0-.757.83-1.213 1.48-.836l7.635 4.43a.963.963 0 0 1 0 1.672Z"></path>
                         </svg>
@@ -137,6 +137,13 @@ const Button = styled.button`
     position:absolute;
     top:5px;
     right:5px;
+
+    transition: all 100ms;
+
+    :hover{
+        opacity:0.5;
+        transform: scale(1.2);
+    }
 `;
 
 const Input = styled.input`

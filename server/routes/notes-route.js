@@ -22,6 +22,14 @@ noteRouter.get('/notes', (req, res) => {
         })
 });
 
+noteRouter.get('/notes/:email', (req, res) => {
+    const user = req.params.email;
+    noteModel.find({author : user}).then(send => res.status(200).json(send))
+        .catch(err => {
+            res.status(500).send("Nothing found")
+        })
+});
+
 noteRouter.put('/editNote/:id', (req, res) => {
     const id = req.params.id;
     noteModel.findById(id)
