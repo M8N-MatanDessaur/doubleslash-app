@@ -3,12 +3,18 @@
 import React  from "react";
 import styled from "styled-components";
 import profileDefault from '../../assets/images/default.jpg'
+import { useNavigate } from "react-router-dom";
 
-export default function TopBar({title="//", profileImage=profileDefault, lightMode, stateMode}){
+export default function TopBar({title="//", profileImage=profileDefault, lightMode, stateMode, profile}){
+    const navigate = useNavigate()
+    const Disconnect = () =>{
+        sessionStorage.clear();
+        navigate('/login')
+    }
     return(
         <Header>
             <Title>{title}</Title>
-            <ProfilePicture src={profileImage} alt="profile" />
+            <PPContainer onClick={Disconnect}><ProfilePicture src={profile} alt="profile" /></PPContainer>
         </Header>
     )
 }
@@ -32,6 +38,12 @@ height:45px;
 width:45px;
 border-radius:100%;
 border: solid 2px var(--accent-color-lighter);
+`;
+
+const PPContainer = styled.button`
+    background:none;
+    border:none;
+    outline:none;
 `;
 
 const Title = styled.h1`

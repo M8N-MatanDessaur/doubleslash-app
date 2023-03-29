@@ -16,6 +16,7 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
     })
 
     useEffect(() => {
+        if(notes.length !==0)
         setNewNote({
             author: notes[selectedCard].author,
             title: notes[selectedCard].title,
