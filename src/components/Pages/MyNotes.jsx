@@ -20,6 +20,7 @@ export default function MyNotes() {
       axios.get(get_url)
       .then((res) => {
         mutate(get_url, res.data);
+        mutate(get_url, notes);
         setModalOpen({ display: "none" });
       })
     };                                                              

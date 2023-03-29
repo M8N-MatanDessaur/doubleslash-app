@@ -76,7 +76,7 @@ const LoginForm = () => {
                 </FormGroup>
 
                 <FormGroup>
-                    <Button type="submit" title="run" onClick={handleSubmit}>
+                    <Button type="submit" title="run"  onClick={handleSubmit}>
                         <svg width="29" height="29" fill="var(--text-color)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="m16.315 13.316-7.635 4.43c-.648.376-1.48-.079-1.48-.836V8.05c0-.757.83-1.213 1.48-.836l7.635 4.43a.963.963 0 0 1 0 1.672Z"></path>
                         </svg>

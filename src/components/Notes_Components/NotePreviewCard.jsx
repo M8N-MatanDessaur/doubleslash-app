@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import CodeEditor from '@uiw/react-textarea-code-editor';
+import axios from "axios";
+import { mutate } from "swr";
 
-export default function NotePreviewCard({ openModal, noteBody, noteTitle, noteExtention, noteId, cardId }) {
+export default function NotePreviewCard({ openModal, noteBody, noteTitle, noteExtention, noteId, cardId, user }) {
     const lang = 
     (noteExtention === 'js') ? {borderColor:"#e8d44d60"} : 
     (noteExtention === 'php') ? {borderColor:"#53509080"} : 
@@ -11,7 +13,11 @@ export default function NotePreviewCard({ openModal, noteBody, noteTitle, noteEx
     (noteExtention === 'xml') ? {borderColor:"#89b94260"} : 
     (noteExtention === 'py') ? {borderColor:"#366e9d60"} : 
     (noteExtention === 'java') ? {borderColor:"#7c007c80"} : 
+    (noteExtention === 'cs') ? {borderColor:"#32917180"} : 
     {borderColor:"#CCCCCC40"} 
+
+    const get_url =  `http://localhost:4040/notes/notes/${user}`;
+
     return (
         <NoteCard onClick={openModal} id={cardId} data-note={noteId} style={lang}>
             <h3>{noteTitle}</h3>
