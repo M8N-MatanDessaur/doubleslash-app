@@ -6,14 +6,15 @@ import { mutate } from "swr";
 
 export default function NotePreviewCard({ openModal, noteBody, noteTitle, noteExtention, noteId, cardId, user }) {
     const lang = 
-    (noteExtention === 'js') ? {borderColor:"#e8d44d60"} : 
-    (noteExtention === 'php') ? {borderColor:"#53509080"} : 
-    (noteExtention === 'html') ? {borderColor:"#e8622860"} : 
-    (noteExtention === 'jsx') ? {borderColor:"#5ed4f360"} : 
-    (noteExtention === 'xml') ? {borderColor:"#89b94260"} : 
-    (noteExtention === 'py') ? {borderColor:"#366e9d60"} : 
-    (noteExtention === 'java') ? {borderColor:"#7c007c80"} : 
-    (noteExtention === 'cs') ? {borderColor:"#32917180"} : 
+    (noteExtention === 'js') ? {borderColor:"#e8d44df0"} : 
+    (noteExtention === 'php') ? {borderColor:"#653ae0f0"} : 
+    (noteExtention === 'html') ? {borderColor:"#e86228f0"} : 
+    (noteExtention === 'jsx') ? {borderColor:"#007accf0"} : 
+    (noteExtention === 'xml') ? {borderColor:"#89b942f0"} : 
+    (noteExtention === 'py') ? {borderColor:"#366e9df0"} : 
+    (noteExtention === 'java') ? {borderColor:"#7c007cf0"} : 
+    (noteExtention === 'cs') ? {borderColor:"#329171f0"} : 
+    (noteExtention === 'css') ? {borderColor:"#4acffff0"} : 
     {borderColor:"#CCCCCC40"} 
 
     const get_url =  `http://localhost:4040/notes/notes/${user}`;
@@ -66,7 +67,7 @@ const Extention = styled.p`
 position:absolute;
 bottom:10px;
 right:10px;
-color:#CCCCCC40;
+color:var(--comment-color);
 `;
 
 // const Text = styled.pre`

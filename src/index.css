@@ -15,15 +15,16 @@
 :root{
   --text-font:'M PLUS Rounded 1c', sans-serif;
   --code-font:'Fira Code', monospace;
+  --full-height:100svh;
+  --full-width:100%;
 
   --accent-color:#6a9955;
   --accent-color-lighter:#83c265;
   --background-color: #202124;
   --foreground-color: #202020;
+  --overground-color: #353535;
   --text-color:#f6f6f6;
-
-  --full-height:100svh;
-  --full-width:100%;
+  --comment-color:#6a9955;
 } 
 
 :root[data-color-mode="dark"]{
@@ -31,6 +32,7 @@
   --accent-color-lighter:#83c265;
   --background-color: #202124;
   --foreground-color: #202020;
+  --overground-color: #353535;
   --text-color:#f6f6f6;
   --comment-color:#6a9955;
 
@@ -41,6 +43,7 @@
   --accent-color-lighter:#FFFFFF;
   --background-color: #1b5e20;
   --foreground-color: #FFFFFF;
+  --overground-color: #FFFFFF;
   --text-color:#000000;
   --comment-color:#989898;
 }
@@ -82,4 +85,8 @@ code {
 
 div, section, article {
   transition: background 200ms ease-in-out;
+}
+
+@media (max-width:500px){
+  body{font-size: 0.8rem;}
 }

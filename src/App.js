@@ -14,7 +14,6 @@ const App =()=> {
         position="top-right"
         reverseOrder={false}
       />
-      <ButtonDarkLight/>
       <Routes>
         <Route path='/notes' element={<MyNotes />} />
         <Route path='/login' element={<LoginForm />} />

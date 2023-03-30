@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { fontFamily } from "@mui/system";
 import axios from "axios";
+import ButtonDarkLight from "../UI_Components/ButtonDarkLight";
 
 const LoginForm = () => {
 
@@ -42,6 +43,7 @@ const LoginForm = () => {
     }
     return (
         <Section>
+             <Absolute><ButtonDarkLight/></Absolute>
             <Logo>//</Logo>
             <Form>
                 <Comment>//Signup form</Comment>
@@ -71,8 +73,8 @@ const LoginForm = () => {
 
                 <FormGroup>
                     <Num>5.&nbsp; </Num>
-                    <Label htmlFor="avatar"><Const>const</Const> profilePicture = </Label>
-                    &nbsp;url(<Input type="file" name="avatar" id="" onChange={handleChange}/>)
+                    <Label htmlFor="avatar"><Const>const</Const> avatar = <SpanButton>[click here]</SpanButton></Label>
+                    <Input style={{display:"none"}} type="file" name="avatar" id="avatar" onChange={handleChange}/>
                 </FormGroup>
 
                 <FormGroup>
@@ -159,6 +161,20 @@ const Logo = styled.h1`
     top:15px;
     left:35px;
     color:var(--accent-color)
+`;
+
+const SpanButton = styled.span`
+    color:#5db0d7;
+    :hover{
+        opacity:0.5;
+        cursor:pointer;
+    }
+`;
+
+const Absolute = styled.div`
+    position:absolute;
+    top:17.5px;
+    right:35px;
 `;
 
 
