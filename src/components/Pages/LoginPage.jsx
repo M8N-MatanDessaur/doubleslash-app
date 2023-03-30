@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast"
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { fontFamily } from "@mui/system";
+import ButtonDarkLight from "../UI_Components/ButtonDarkLight";
 
 const LoginForm = () => {
     const navigate = useNavigate()
@@ -51,6 +52,7 @@ const LoginForm = () => {
     }
     return (
         <Section>
+            <Absolute><ButtonDarkLight/></Absolute>
             <Logo>//</Logo>
             <Form>
                 <Comment>//Login form</Comment>
@@ -150,6 +152,12 @@ const Logo = styled.h1`
     top:15px;
     left:35px;
     color:var(--accent-color)
+`;
+
+const Absolute = styled.div`
+    position:absolute;
+    top:17.5px;
+    right:35px;
 `;
 
 
