@@ -1,53 +1,12 @@
-# // DoubleSlash
+# DoubleSlash App
+DoubleSlash is a note-taking app designed specifically for developers and coders. It features a simple and minimalist user interface, along with syntax highlighting for code snippets.
 
-### Note taking app for coders
+## Features
+DoubleSlash comes with a variety of features designed to help developers and coders take notes more efficiently. Some of its key features include:
 
----
+Syntax highlighting for code snippets
+Autosave feature to ensure you don't lose your work
+Ability to search notes by keyword or title
 
-> [App Description]
->
-> DoubleSlash
-> is a note-taking app for coders.  
-> It uses syntax highlighting to make taking coding notes easier. You can also store your coding tips, snippets, and to-do lists or even just plain text notes.
-> It's a minimalist app with a fun twist that's easy to use.
-
----
-
-> [Project Inspirations]
->
-> - Google Keep
-> - Material UI
-> - @uiw/react-textarea-code-editor
-
----
-
-## • Data Models:
-
-```JS
-//User
-{ 
-  avatar {type : String},
-  firstName {type : String},
-  lastName {type : String}
-  email {type: String},
-  password {type: String}
-};
-
-//Notes  
-{  
-  author {type : String}, 
-  title {type : String}, 
-  body : {type : String}, 
-  extention : {type : String}, 
-  dateCreated {type : date} 
-}  
-```
-
----
----
-# Task
-> Developer : Lydia \
-> Date      : 14-03-2023 \
-> Task      : Buttom lightMode
----
----
+## Conclusion
+DoubleSlash is a great note-taking app for developers and coders who want a simple and efficient way to keep track of their work. With its syntax highlighting, tag system, and Markdown support, it's a great tool for anyone who needs to take notes while coding.
