@@ -1,79 +1,108 @@
-import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
-import { toast } from "react-hot-toast"
+import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { fontFamily } from "@mui/system";
 import ButtonDarkLight from "../UI_Components/ButtonDarkLight";
 
 const LoginForm = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const [loginInfo, setLoginInfo] = useState({email: '', password: '' })
-    const handleChange = (e) => {
-        setLoginInfo(prevState => ({ ...prevState, [e.target.name]: e.target.value }))
-    }
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
 
-    useEffect(()=>{
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
         if (sessionStorage.length !== 0) {
-            navigate('/notes');
+          navigate("/notes");
         }
-    })
-    
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    checkSession();
+  }, [navigate]);
 
-        try {
-            const findUser = await fetch(`http://127.0.0.1:4040/users/getUserByEmail/${loginInfo.email}`)
-            const foundUser = await findUser.json();
+  const storeUserData = (foundUser) => {
+    sessionStorage.setItem("connectedUser", foundUser[0].email);
+    sessionStorage.setItem("profile", foundUser[0].avatar);
+    sessionStorage.setItem("firstName", foundUser[0].firstName);
+    sessionStorage.setItem("lastName", foundUser[0].lastName);
+  };
 
-            // check if user exists in DataBase
-            if (foundUser.length === 0) {
-                toast.error(`User does not exists, Sign Up`)
-            }
-            else {
-                if (loginInfo.password === foundUser[0].password) {
-                    toast.success(`Connection`)
-                    sessionStorage.setItem("connectedUser", foundUser[0].email);
-                    sessionStorage.setItem("profile", foundUser[0].avatar);
-                    sessionStorage.setItem("firstName", foundUser[0].firstName);
-                    sessionStorage.setItem("lastName", foundUser[0].lastName);
-                    navigate('/notes')
-                }
-                else {
-                    console.log(foundUser[0].password)
-                    toast.error('Email or Password Inccorect');
-                }
-            }
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const API_BASE_URL = "http://127.0.0.1:4040"
+
+      try {
+        const findUser = await fetch(
+          `${API_BASE_URL}/users/getUserByEmail/${email}`
+        );
+        const foundUser = await findUser.json();
+
+        if (foundUser.length === 0) {
+          toast.error(`User does not exist, Sign Up`);
+        } else {
+          if (password === foundUser[0].password) {
+            toast.success(`Connection`);
+            storeUserData(foundUser);
+            navigate("/notes");
+          } else {
+            toast.error("Email or Password Incorrect");
+          }
         }
-        catch {
-            toast.error('Email or Password Inccorect');
-        }
-    }
-    return (
-        <Section>
-            <Absolute><ButtonDarkLight/></Absolute>
-            <Logo>//</Logo>
-            <Form>
-                <Comment>//Login form</Comment>
-                <FormGroup>
-                    <Num>1.&nbsp; </Num>
-                    <Label htmlFor="email"><Const>const</Const> email = </Label>
-                    <Input type="email" name="email" id="" onChange={handleChange}/>
-                </FormGroup>
+      } catch {
+        toast.error("Email or Password Incorrect");
+      }
+    },
+    [email, password, navigate]
+  );
 
-                <FormGroup>
-                    <Num>2.&nbsp; </Num>
-                    <Label htmlFor="password"><Const>const</Const> password = </Label>
-                    <Input type="password" name="password" id="" onChange={handleChange}/>
-                </FormGroup>
+  return (
+    <Section>
+      <Absolute>
+        <ButtonDarkLight />
+      </Absolute>
+      <Logo>//</Logo>
+      <Form>
+        <Comment>//Login form</Comment>
+        <FormGroup>
+          <Num>1.&nbsp; </Num>
+          <Label htmlFor="email">
+            <Const>const</Const> email ={" "}
+          </Label>
+          <Input type="email" name="email" id="" onChange={handleEmailChange} />
+        </FormGroup>
 
-                <FormGroup>
-                    <Button type="submit" title="run" onClick={handleSubmit}>
-                        <svg width="29" height="29" fill="var(--text-color)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="m16.315 13.316-7.635 4.43c-.648.376-1.48-.079-1.48-.836V8.05c0-.757.83-1.213 1.48-.836l7.635 4.43a.963.963 0 0 1 0 1.672Z"></path>
-                        </svg>
-                    </Button>
+        <FormGroup>
+          <Num>2.&nbsp; </Num>
+          <Label htmlFor="password">
+            <Const>const</Const> password ={" "}
+          </Label>
+          <Input
+            type="password"
+            name="password"
+            id=""
+            onChange={handlePasswordChange}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Button type="submit" title="run" onClick={handleSubmit}>
+            <svg
+              width="29"
+              height="29"
+              fill="var(--text-color)"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="m16.315 13.316-7.635 4.43c-.648.376-1.48-.079-1.48-.836V8.05c0-.757.83-1.213 1.48-.836l7.635 4.43a.963.963 0 0 1 0 1.672Z"></path>
+            </svg>
+          </Button>
                 </FormGroup>
                 <br />
                 <Link style={{color:"var(--comment-color)", fontSize:"0.8rem", textDecoration:"none"}} to={'/signup'}>Signup instead</Link>

@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { mutate } from "swr";
 import NotePreviewCard from "../Notes_Components/NotePreviewCard";
 
 //Components
@@ -8,7 +7,7 @@ import BottomBar from '../UI_Components/BottomBar';
 import ContentContainer from '../UI_Components/ContentContainer';
 import TopBar from '../UI_Components/TopBar';
 
-export default function MainLayout({ openModal, notes, lightMode, stateMode, user, profile }) {
+export default function MainLayout({ openModal, notes, lightMode, stateMode, user, profile, mutate }) {
 
     const get_url = `http://localhost:4040/notes/notes/${user}`;
 
@@ -27,14 +26,10 @@ export default function MainLayout({ openModal, notes, lightMode, stateMode, use
         axios.post('http://127.0.0.1:4040/notes/newNote', emptyNote)
             .then((res) => {
                 const newNotes = [...notes, res.data];
-                mutate(newNotes, false);
-                axios.get(get_url)
-                    .then((res) => {
-                        mutate(get_url, res.data);
-                    })
-            })
+                mutate(get_url, newNotes, false);
+            });
     }
-
+    
     const searchNote = (event) => {
         setSearch(event.target.value)
     }

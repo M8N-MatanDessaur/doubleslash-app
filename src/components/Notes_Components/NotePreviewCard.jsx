@@ -20,7 +20,7 @@ export default function NotePreviewCard({ openModal, noteBody, noteTitle, noteEx
     const get_url =  `http://localhost:4040/notes/notes/${user}`;
 
     return (
-        <NoteCard onClick={openModal} id={cardId} data-note={noteId} style={lang}>
+        <NoteCard onClick={openModal} data-id={cardId} data-note={noteId} style={lang}>
             <h3>{noteTitle}</h3>
             <CodeEditor 
                 value={noteBody}
