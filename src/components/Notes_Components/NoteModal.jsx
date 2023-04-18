@@ -1,10 +1,39 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { mutate } from "swr";
 import CodeEditor from '@uiw/react-textarea-code-editor';
 
-export default function NoteModal({ modalOpen, closeModal, selectedId, selectedCard, notes }) {
+export default function NoteModal({ modalOpen, closeModal, selectedId, selectedCard, notes, user }) {
+    const modalRef = useRef();
+    const API_BASE_URL = "http://127.0.0.1:4040";
+    const get_url = `${API_BASE_URL}/notes/notes/${user}`;
+
+    useEffect(() => {
+
+        if (notes.length !== 0) {
+            setNewNote({
+                author: notes[selectedCard].author,
+                title: notes[selectedCard].title,
+                body: notes[selectedCard].body,
+                extention: notes[selectedCard].extention,
+                dateCreated: notes[selectedCard].dateCreated,
+                dateModified: notes[selectedCard].dateModified,
+            })
+        }
+
+        const handleClickOutside = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                closeModal();
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [modalRef, closeModal, notes, selectedCard])
+
 
     const [newNote, setNewNote] = useState({
         author: '',
@@ -15,69 +44,84 @@ export default function NoteModal({ modalOpen, closeModal, selectedId, selectedC
         dateModified: '',
     })
 
-    useEffect(() => {
-        if(notes.length !==0)
-        setNewNote({
-            author: notes[selectedCard].author,
-            title: notes[selectedCard].title,
-            body: notes[selectedCard].body,
-            extention: notes[selectedCard].extention,
-            dateCreated: notes[selectedCard].dateCreated,
-            dateModified: notes[selectedCard].dateModified,
-        })
-    }, [selectedCard, notes])
-
     const handleChange = event => {
         setNewNote(prevState => ({ ...prevState, [event.target.name]: event.target.value }))
+        console.log(newNote)
     }
 
     const editNote = () => {
-        axios.put(`http://localhost:4040/notes/editNote/${selectedId}`, newNote)
-            .then((res) => { console.log(res.data) })
-            .catch((err) => console.log(err))
-        closeModal()
-    }
-    // *Eric Gendron
-    const deleteNote = () => {
-        try {
-            axios.delete(`http://localhost:4040/notes/deleteNote/${selectedId}`)
-            window.location.reload(false);
-        } 
-        catch (err) {
-            console.log(err);
-        }
-    }
+        return new Promise((resolve, reject) => {
+            axios.put(`http://localhost:4040/notes/editNote/${selectedId}`, newNote)
+                .then((res) => {
+                    console.log("Edit note success:", res.data);
+                    resolve();
+                })
+                .catch((err) => {
+                    console.log("Edit note error:", err);
+                    reject(err);
+                })
+        });
+    };
+
+    const saveNote = () => {
+        console.log("Editing note...");
+        editNote()
+            .then(() => {
+                console.log("Note edited");
+            })
+            .catch((error) => {
+                console.error("Error while editing note:", error);
+            });
+    };
+
+    const deleteNote = async () => {
+        await axios.delete(`http://localhost:4040/notes/deleteNote/${selectedId}`);
+        const newNotes = notes.filter((note) => note._id !== selectedId);
+        mutate(get_url, newNotes, false);
+
+        window.location.reload();
+    };
+
+
 
     return (
-        <Overlay style={modalOpen} onClick={editNote}>
+        <Overlay isOpen={modalOpen} onClick={closeModal}>
             <NotePad onClick={event => event.stopPropagation()}>
                 <NoteHeader>
-                    <ActionButton onClick={editNote}>
+                    <SDButtons>
+                        <ActionButton onClick={saveNote}>
+                            <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V7l-4-4Zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3ZM5 9h10V5H5v4Z" clipRule="evenodd"></path>
+                            </svg>
+                        </ActionButton>
+                        <ActionButton onClick={deleteNote}>
+                            <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" d="M15.5 4H19v2H5V4h3.5l1-1h5l1 1ZM8 21c-1.1 0-2-.9-2-2V7h12v12c0 1.1-.9 2-2 2H8Z" clipRule="evenodd"></path>
+                            </svg>
+                        </ActionButton>
+                    </SDButtons>
+                    <ActionButton onClick={closeModal}>
                         <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z" />
-                        </svg>
-                    </ActionButton>
-                    <ActionButton onClick={deleteNote}>
-                        <svg width="25" height="25" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.583 4.569a2.4 2.4 0 0 1 3.393 0l4.655 4.655a2.4 2.4 0 0 1 0 3.393l-6.6 6.6a2.4 2.4 0 0 1-1.697.704h-3.31a2.4 2.4 0 0 1-1.697-.704l-3-3a2.4 2.4 0 0 1 0-3.393l8.255-8.255Zm2.545.848a1.2 1.2 0 0 0-1.697 0l-5.56 5.56 6.352 6.351 5.56-5.56a1.2 1.2 0 0 0 0-1.696l-4.655-4.655Zm-1.753 12.76-6.352-6.352-1.847 1.847a1.2 1.2 0 0 0 0 1.697l3 3a1.2 1.2 0 0 0 .849.352h3.31a1.2 1.2 0 0 0 .849-.352l.192-.192h-.001Z" />
+                            <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path>
                         </svg>
                     </ActionButton>
                 </NoteHeader>
                 <NoteBody>
                     <NoteTitle type="text" name="title" value={`${newNote.title}`} onChange={handleChange} />
-  
-                        <CodeEditor
-                            value={newNote.body}
-                            language={newNote.extention}
-                            onChange={handleChange}
-                            name="body"
-                            padding={8.75}
-                            style={{
-                                 height:"100%",
-                                 background: "var(--foreground-color)",
-                                 fontFamily:"var(--code-font)",
-                            }}
-                        />
+
+                    <CodeEditor
+                        value={newNote.body}
+                        language={newNote.extention}
+                        onBlur={(e) => handleChange({ target: { name: "body", value: e.target.value } })}
+                        name="body"
+                        padding={8.75}
+                        style={{
+                            height: "100%",
+                            background: "var(--foreground-color)",
+                            fontFamily: "var(--code-font)",
+                        }}
+                    />
+
 
                 </NoteBody>
                 <NoteExtention type="text" name="extention" value={newNote.extention} onChange={handleChange} />
@@ -93,7 +137,7 @@ const Overlay = styled.div`
         left:0;
         height:100svh;
         width:100vw;
-        display:none;
+        display: ${({ isOpen }) => (isOpen ? 'grid' : 'none')};
         place-content:center;
         background-color: #000000A0;
         backdrop-filter:blur(2px);
@@ -184,6 +228,11 @@ const ActionButton = styled.button`
             color: var(--accent-color-lighter);
         }
     `;
+
+const SDButtons = styled.div`
+display:flex;
+gap:10px
+`
 
 const NoteTitle = styled.input`
         width:-webkit-fill-available;

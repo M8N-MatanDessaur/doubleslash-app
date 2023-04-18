@@ -1,49 +1,60 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
-import { toast } from "react-hot-toast"
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { fontFamily } from "@mui/system";
 import axios from "axios";
 import ButtonDarkLight from "../UI_Components/ButtonDarkLight";
 
 const LoginForm = () => {
+    const [signupInfo, setSignupInfo] = useState({
+        avatar: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+    });
+    const navigate = useNavigate();
 
-    const [signupInfo, setSignupInfo] = useState({avatar: '', firstName: '', lastName: '', email: '', password: '' })
-    const navigate = useNavigate()
     const handleChange = (e) => {
-        setSignupInfo(prevState => ({ ...prevState, [e.target.name]: e.target.value }))
-    }
-
+        setSignupInfo((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }));
+    };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+
+        const API_BASE_URL = "http://127.0.0.1:4040";
 
         try {
-            const findUser = await fetch(`http://127.0.0.1:4040/users/getUserByEmail/${signupInfo.email}`)
+            const findUser = await fetch(
+                `${API_BASE_URL}/users/getUserByEmail/${signupInfo.email}`
+            );
             const foundUser = await findUser.json();
 
-            // check if user exists in DataBase
             if (foundUser.length !== 0) {
-                toast.error(`User exists, Login instead`)
-            }
-            else {
+                toast.error("User exists, Login instead");
+            } else {
                 axios
-                .post('http://127.0.0.1:4040/users/newUser', signupInfo)
-                .then((res) => {
-                  toast.success(`Welcome`)
-                  navigate("/login")
-                })
-                .catch((err) => console.log(err)) //Catch if any errors
+                    .post(`${API_BASE_URL}/users/newUser`, signupInfo)
+                    .then((res) => {
+                        toast.success("Welcome");
+                        navigate("/login");
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        toast.error("An error has occurred, try again");
+                    });
             }
+        } catch {
+            toast.error("An error has occurred, try again");
         }
-        catch {
-            toast.error('An error has occured, try again');
-        }
-    }
+    };
     return (
         <Section>
-             <Absolute><ButtonDarkLight/></Absolute>
+            <Absolute><ButtonDarkLight /></Absolute>
             <Logo>//</Logo>
             <Form>
                 <Comment>//Signup form</Comment>
@@ -56,36 +67,36 @@ const LoginForm = () => {
                 <FormGroup>
                     <Num>2.&nbsp; </Num>
                     <Label htmlFor="pass"><Const>const</Const> password = </Label>
-                    <Input type="password" name="password" id="" onChange={handleChange}/>
+                    <Input type="password" name="password" id="" onChange={handleChange} />
                 </FormGroup>
 
                 <FormGroup>
                     <Num>3.&nbsp; </Num>
                     <Label htmlFor="firstName"><Const>const</Const> firstName = </Label>
-                    <Input type="text" name="firstName" id="" onChange={handleChange}/>
+                    <Input type="text" name="firstName" id="" onChange={handleChange} />
                 </FormGroup>
 
                 <FormGroup>
                     <Num>4.&nbsp; </Num>
                     <Label htmlFor="lastName"><Const>const</Const> lastName = </Label>
-                    <Input type="text" name="lasName" id="" onChange={handleChange}/>
+                    <Input type="text" name="lasName" id="" onChange={handleChange} />
                 </FormGroup>
 
                 <FormGroup>
                     <Num>5.&nbsp; </Num>
                     <Label htmlFor="avatar"><Const>const</Const> avatar = <SpanButton>[click here]</SpanButton></Label>
-                    <Input style={{display:"none"}} type="file" name="avatar" id="avatar" onChange={handleChange}/>
+                    <Input style={{ display: "none" }} type="file" name="avatar" id="avatar" onChange={handleChange} />
                 </FormGroup>
 
                 <FormGroup>
-                    <Button type="submit" title="run"  onClick={handleSubmit}>
+                    <Button type="submit" title="run" onClick={handleSubmit}>
                         <svg width="29" height="29" fill="var(--text-color)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="m16.315 13.316-7.635 4.43c-.648.376-1.48-.079-1.48-.836V8.05c0-.757.83-1.213 1.48-.836l7.635 4.43a.963.963 0 0 1 0 1.672Z"></path>
                         </svg>
                     </Button>
                 </FormGroup>
                 <br />
-                <Link style={{color:"var(--comment-color)", fontSize:"0.8rem", textDecoration:"none"}} to={'/login'}>Login instead</Link>
+                <Link style={{ color: "var(--comment-color)", fontSize: "0.8rem", textDecoration: "none" }} to={'/login'}>Login instead</Link>
             </Form>
         </Section>
     )
